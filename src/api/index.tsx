@@ -22,8 +22,16 @@ export const openLoginPopup = async () => {
   await firebase.auth().signInWithPopup(provider)
 }
 
-export const registerUserChanges = (setUser: (user: any) => any) => {
-  firebase.auth().onAuthStateChanged(user => {
+export const logOut = async () => {
+  await firebase.auth().signOut()
+}
+
+export interface User {
+  email: string | null;
+}
+
+export const registerUserChanges = (setUser: (user: User | null) => void) => {
+  firebase.auth().onAuthStateChanged((user: User | null) => {
     setUser(user)
   })
 }
