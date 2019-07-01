@@ -4,6 +4,7 @@ import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom'
 import Toast from './components/Toast'
 import styled from 'styled-components'
 import Button from './components/Button'
+import Home from './pages/home/Home';
 
 const LoginPage = styled.div`
 display: flex;
@@ -37,7 +38,7 @@ const App: React.FC = () => {
       <Switch>
         <Route path="/create" component={() => <div>Create</div>}/>
         <Route path="/update" component={() => <div>Update</div>}/>
-        <Route path="/" component={() => <div>Home <button onClick={logOut}>Logout</button></div>}/>
+        <Route path="/" exact component={Home}/>
         <Redirect to="/"/>
       </Switch>
     </BrowserRouter>

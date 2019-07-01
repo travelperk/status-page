@@ -41,7 +41,16 @@ const getDocData = async (doc: any) => {
   return docResolved.data()
 }
 
-export const getAllIncidents = (setIncidents: (incidents: Array<any>) => any) =>
+export interface IncidentUpdate {
+  type: 'investigating' | 'update' | 'resolved'
+}
+
+export interface Incident {
+  updates: Array<IncidentUpdate>
+  type: 'down' | 'degraded'
+}
+
+export const getAllIncidents = (setIncidents: (incidents: Array<Incident>) => any) =>
   incidentsDb.onSnapshot(async (snapshot: any) => {
     if (snapshot.empty) return setIncidents([])
     const incidents = await Promise.all(
@@ -52,8 +61,8 @@ export const getAllIncidents = (setIncidents: (incidents: Array<any>) => any) =>
             .map(async (update: any) => await getDocData(update))
             .reverse()
         )
-        return { ...data, updates, id: doc.id }
-      })
+        return { ...data, updates, id: doc.id } as Incident
+      }) as Array<Incident>
     )
     setIncidents(incidents)
   })
