@@ -1,5 +1,6 @@
 import { render, cleanup, waitForElement } from '@testing-library/react'
 import React from 'react'
+import { MemoryRouter } from 'react-router-dom'
 import 'jest-dom/extend-expect'
 import Home from './Home'
 import { getAllIncidents } from '../../api/index'
@@ -20,6 +21,7 @@ const incidentFabricator = type => {
         timestamp: {
           seconds: 1560851458,
           nanoseconds: 593000000,
+          toDate: () => new Date(1560851458)
         },
         type: 'investigating',
       },
@@ -39,6 +41,7 @@ const resolvedIncidentFabricator = () => {
         timestamp: {
           seconds: 1560851458,
           nanoseconds: 593000000,
+          toDate: () => new Date(1560851458)
         },
         type: 'resolved',
       },
@@ -54,7 +57,7 @@ describe('Home', () => {
       getAllIncidents.mockImplementationOnce(fn =>
         setTimeout(() => fn([incidentFabricator(state)]), 0)
       )
-      const { getByText } = render(<Home />)
+      const { getByText } = render(<MemoryRouter><Home /></MemoryRouter>)
       expect(getByText('Loading ...')).toBeInTheDocument()
       await waitForElement(() => getByText(`Service is: ${state}`))
 
@@ -66,7 +69,7 @@ describe('Home', () => {
     getAllIncidents.mockImplementationOnce(fn =>
       setTimeout(() => fn([resolvedIncidentFabricator()]), 0)
     )
-    const { getByText } = render(<Home />)
+    const { getByText } = render(<MemoryRouter><Home /></MemoryRouter> )
     expect(getByText('Loading ...')).toBeInTheDocument()
     await waitForElement(() => getByText(`Service is: stable`))
 

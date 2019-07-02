@@ -12,10 +12,10 @@ type Props = {
 }
 
 const Create = (props: Props) => {
-  const [title, setTitle] = useState()
+  const [title, setTitle] = useState('')
   const [type, setType] = useState<Incident['type']>('degraded')
   const [services, setServices] = useState<Array<ServicesType>>([])
-  const [description, setDescription] = useState()
+  const [description, setDescription] = useState('')
 
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
@@ -65,19 +65,17 @@ const Create = (props: Props) => {
         </label>
         {type}
         <button>Create incident</button>
-        <label>
-          Services
-          {Services.map(service => (
-            <label>
-              {service}
-              <input
-                type="checkbox"
-                checked={services.includes(service)}
-                onChange={() => toggleType(service)}
-              />
-            </label>
-          ))}
-        </label>
+        Services
+        {Services.map(service => (
+          <label key={service}>
+            {service}
+            <input
+              type="checkbox"
+              checked={services.includes(service)}
+              onChange={() => toggleType(service)}
+            />
+          </label>
+        ))}
         {services.join(',')}
 
         <label>
