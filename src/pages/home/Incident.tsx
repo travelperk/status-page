@@ -1,5 +1,6 @@
 import React from 'react'
 import { Incident as IncidentInterface } from '../../api'
+import IncidentUpdate from './IncidentUpdate'
 import styled from 'styled-components'
 
 const ServiceList = styled.ul`
@@ -45,23 +46,19 @@ const Incident = (props: Props) => {
   const state = getState(incident)
   return (
     <Card state={state}>
-      <h1>{incidentTimestamp.toDate().toString()}</h1>
-      <h3>{incident.title}</h3>
+      <h1>{incidentTimestamp.toDate().toUTCString()}</h1>
+      <h2>{incident.title}</h2>
       <ServiceList>
         {incident.services.map(service => (
           <li key={service}>{service}</li>
         ))}
       </ServiceList>
-      <ul>
+
         {incident.updates.map(update => (
-          <li key={update.timestamp.seconds}>
-            <p>
-              {update.type} - {update.description}
-            </p>
-            <p>{update.timestamp.toDate().toString()}</p>
-          </li>
+            <IncidentUpdate key={update.timestamp.seconds}
+                            update={update} />
         ))}
-      </ul>
+
     </Card>
   )
 }
