@@ -6,6 +6,9 @@ import {
   ServicesType,
 } from '../../api/index'
 import { History } from 'history'
+import Button from '../../components/Button'
+import { FormItem } from '../../components/FormItem'
+import { FormWrapper } from '../../components/FormWrapper'
 
 type Props = {
   history: History
@@ -39,21 +42,42 @@ const Create = (props: Props) => {
   }
 
   return (
-    <>
-      <h1>create!</h1>
+    <FormWrapper>
+      <h1>Create incident</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Title
+        <FormItem>
+          {/* 
+        // @ts-ignore */}
+          <label css="margin-bottom: 0.5em" htmlFor="title">
+            Title
+          </label>
           <input
+            id="title"
             type="text"
             onChange={evt => setTitle(evt.currentTarget.value)}
             value={title}
           />
-        </label>
-        {title}
-        <label>
-          Type
+        </FormItem>
+        <FormItem>
+          {/* 
+        // @ts-ignore */}
+          <label css="margin-bottom: 0.5em" htmlFor="description">
+            Description
+          </label>
+          <textarea
+            id="description"
+            onChange={evt => setDescription(evt.currentTarget.value)}
+            value={description}
+          />
+        </FormItem>
+        <FormItem>
+          {/* 
+        // @ts-ignore */}
+          <label css="margin-bottom: 0.5em" htmlFor="type">
+            Type
+          </label>
           <select
+            id="type"
             onChange={evt =>
               setType(evt.currentTarget.value as Incident['type'])
             }
@@ -62,32 +86,29 @@ const Create = (props: Props) => {
             <option value="degraded">Degraded</option>
             <option value="down">Down</option>
           </select>
-        </label>
-        {type}
-        <button>Create incident</button>
-        Services
-        {Services.map(service => (
-          <label key={service}>
-            {service}
-            <input
-              type="checkbox"
-              checked={services.includes(service)}
-              onChange={() => toggleType(service)}
-            />
-          </label>
-        ))}
-        {services.join(',')}
-
-        <label>
-          Description
-          <input
-            type="text"
-            onChange={evt => setDescription(evt.currentTarget.value)}
-            value={description}
-          />
-        </label>
+        </FormItem>
+        {/* 
+        // @ts-ignore */}
+        <div css="margin-bottom: 1em">
+          <p>Services affected</p>
+          {Services.map(service => (
+            // @ts-ignore
+            <label
+              key={service}
+              css="margin-right: 1em; text-transform: capitalize"
+            >
+              <input
+                type="checkbox"
+                checked={services.includes(service)}
+                onChange={() => toggleType(service)}
+              />
+              {service}
+            </label>
+          ))}
+        </div>
+        <Button>Create incident</Button>
       </form>
-    </>
+    </FormWrapper>
   )
 }
 

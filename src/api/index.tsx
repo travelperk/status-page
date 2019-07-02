@@ -53,6 +53,7 @@ export interface IncidentUpdate {
 }
 
 export interface Incident {
+  id: string
   services: Array<string>
   title: string
   updates: Array<IncidentUpdate>
@@ -114,11 +115,12 @@ export const createIncident = async (incident: PartialIncident) => {
   })
 }
 
-/*
 export const addUpdateToIncident = async (
-  incidentId = 'Qgiup9L0mzx4417v8EFd'
+  incidentId: string,
+  description: string,
+  type: IncidentUpdate['type']
 ) => {
-  const newIncidentUpdate = await createIncidentUpdate()
+  const newIncidentUpdate = await createIncidentUpdate({ description, type })
   const incident = incidentsDb.doc(incidentId)
   const incidentData = await getDocData(incident)
   const existingUpdates = incidentData.updates
@@ -126,7 +128,6 @@ export const addUpdateToIncident = async (
     updates: [...existingUpdates, newIncidentUpdate],
   })
 }
-*/
 
 /* export const Services: Array<ServicesType> = [
   'flights',
@@ -140,3 +141,14 @@ export type ServicesType = 'flights' | 'hotels' | 'cars' | 'trains' */
 export const Services: Array<string> = ['flights', 'hotels', 'cars', 'trains']
 
 export type ServicesType = typeof Services[number]
+
+export const getIncident = (id: string, setter: (incident: Incident) => void) =>
+  incidentsDb.doc(id).onSnapshot(async (doc: any) => {
+    const data = doc.data()
+    const updates = await Promise.all(
+      data.updates
+        .map(async (update: any) => await getDocData(update))
+        .reverse()
+    )
+    setter({ ...data, updates, id: doc.id } as Incident)
+  })

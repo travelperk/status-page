@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import Button from './components/Button'
 import Home from './pages/home/Home'
 import Create from './pages/create/Create'
+import Update from './pages/update/Update'
 
 const LoginPage = styled.div`
   display: flex;
@@ -46,7 +47,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/create" component={Create} />
-        <Route path="/update" component={() => <div>Update</div>} />
+        <Route path="/update/:id" component={Update} />
         <Route path="/" exact component={Home} />
         <Redirect to="/" />
       </Switch>

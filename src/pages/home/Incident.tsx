@@ -2,6 +2,7 @@ import React from 'react'
 import { Incident as IncidentInterface } from '../../api'
 import IncidentUpdate from './IncidentUpdate'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const ServiceList = styled.ul`
   padding-left: 0;
@@ -16,7 +17,10 @@ const ServiceList = styled.ul`
     margin-right: 1em;
   }
 `
-const Card = styled.div<{ state: IncidentInterface['type'] | 'stable' }>`
+const Card = styled(Link)<{ state: IncidentInterface['type'] | 'stable' }>`
+  display: block;
+  text-decoration: none;
+  color: inherit;
   box-shadow: 0 0 4px 2px #0003;
   padding: 1em;
   box-sizing: border-box;
@@ -47,7 +51,7 @@ const Incident = (props: Props) => {
     incident.updates[incident.updates.length - 1].timestamp
   const state = getState(incident)
   return (
-    <Card state={state}>
+    <Card state={state} to={`/update/${incident.id}`}>
       <h1>{incidentTimestamp.toDate().toUTCString()}</h1>
       <h2>{incident.title}</h2>
       <ServiceList>
