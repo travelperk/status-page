@@ -27,7 +27,7 @@ export const logOut = async () => {
 }
 
 export interface User {
-  email: string | null;
+  email: string | null
 }
 
 export const registerUserChanges = (setUser: (user: User | null) => void) => {
@@ -41,29 +41,38 @@ const getDocData = async (doc: any) => {
   return docResolved.data()
 }
 
+interface FirebaseTimestamp {
+  toDate(): Date
+  seconds: number
+}
+
 export interface IncidentUpdate {
+  description: string
   type: 'investigating' | 'update' | 'resolved'
+  timestamp: FirebaseTimestamp
 }
 
 export interface Incident {
+  services: Array<string>
+  title: string
   updates: Array<IncidentUpdate>
   type: 'down' | 'degraded'
 }
 
-export const getAllIncidents = (setIncidents: (incidents: Array<Incident>) => any) =>
+export const getAllIncidents = (
+  setIncidents: (incidents: Array<Incident>) => any
+) =>
   incidentsDb.onSnapshot(async (snapshot: any) => {
     if (snapshot.empty) return setIncidents([])
-    const incidents = await Promise.all(
-      snapshot.docs.map(async (doc: any) => {
-        const data = doc.data()
-        const updates = await Promise.all(
-          data.updates
-            .map(async (update: any) => await getDocData(update))
-            .reverse()
-        )
-        return { ...data, updates, id: doc.id } as Incident
-      }) as Array<Incident>
-    )
+    const incidents = await Promise.all(snapshot.docs.map(async (doc: any) => {
+      const data = doc.data()
+      const updates = await Promise.all(
+        data.updates
+          .map(async (update: any) => await getDocData(update))
+          .reverse()
+      )
+      return { ...data, updates, id: doc.id } as Incident
+    }) as Array<Incident>)
     setIncidents(incidents)
   })
 

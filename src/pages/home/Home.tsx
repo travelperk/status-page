@@ -1,22 +1,31 @@
-import  React, { useState, useEffect } from 'react';
-import { getAllIncidents } from '../../api/index';
-import Status from './Status';
+import React, { useState, useEffect } from 'react'
+import { getAllIncidents, Incident as IncidentInterface } from '../../api/index'
+import Status from './Status'
+import Incident from './Incident'
 
 const Home = () => {
-    const [incidentList, setIncidentList] = useState()
-    useEffect(() =>{
-        getAllIncidents(setIncidentList)
-    }, [])
+  const [incidentList, setIncidentList] = useState<Array<IncidentInterface>>()
+  useEffect(() => {
+    getAllIncidents(setIncidentList)
+  }, [])
 
-    if(!incidentList){
-        return (<div>Loading ...</div>)
-    }
+  if (!incidentList) {
+    return <div>Loading ...</div>
+  }
 
-    return (
-        <Status
-            incidentList={incidentList}
-        />
-    )
+  return (
+    <>
+      <Status incidentList={incidentList} />
+      {incidentList.map(incident => {
+        return (
+          <Incident
+            key={incident.updates[0].timestamp.seconds}
+            incident={incident}
+          />
+        )
+      })}
+    </>
+  )
 }
 
 export default Home
