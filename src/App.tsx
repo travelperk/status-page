@@ -15,16 +15,20 @@ align-items: center;
 `
 
 const App: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>()
 
   useEffect(() => {
     registerUserChanges(setUser)
   }, [])
 
-  if (!user) {
+  if (user === null) {
     return <LoginPage>
       <Button onClick={openLoginPopup}>Login</Button>
     </LoginPage>
+  }
+
+  if (!user) {
+    return <LoginPage>Loading...</LoginPage>
   }
 
   if (!user.email || !user.email.endsWith('@travelperk.com')) {
