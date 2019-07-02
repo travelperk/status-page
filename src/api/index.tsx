@@ -62,7 +62,7 @@ export interface Incident {
 export const getAllIncidents = (
   setIncidents: (incidents: Array<Incident>) => any
 ) =>
-  incidentsDb.onSnapshot(async (snapshot: any) => {
+  incidentsDb.orderBy('timestamp').onSnapshot(async (snapshot: any) => {
     if (snapshot.empty) return setIncidents([])
     const incidents = await Promise.all(snapshot.docs.map(async (doc: any) => {
       const data = doc.data()
@@ -73,28 +73,48 @@ export const getAllIncidents = (
       )
       return { ...data, updates, id: doc.id } as Incident
     }) as Array<Incident>)
-    setIncidents(incidents)
+    setIncidents(incidents.reverse())
   })
 
-export const createIncidentUpdate = async () => {
+interface PartialUpdate {
+  description: string
+  timestamp?: firebase.firestore.FieldValue
+  type: IncidentUpdate['type']
+}
+
+export const createIncidentUpdate = async (update: PartialUpdate) => {
   return await updatesDb.add({
-    description: 'Shit happened',
-    timestamp: new Date(),
-    type: 'investigating',
+    description: update.description,
+    timestamp:
+      update.timestamp || firebase.firestore.FieldValue.serverTimestamp(),
+    type: update.type,
   })
 }
 
-export const createIncident = async () => {
-  const initialUpdate = await createIncidentUpdate()
+interface PartialIncident {
+  title: Incident['title']
+  type: Incident['type']
+  services: Array<ServicesType>
+  description: PartialUpdate['description']
+}
+export const createIncident = async (incident: PartialIncident) => {
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp()
+  const initialUpdate = await createIncidentUpdate({
+    description: incident.description,
+    type: 'investigating',
+    timestamp: timestamp,
+  })
 
   await incidentsDb.add({
-    title: 'Flights not working',
-    services: ['flights'],
-    type: 'down',
+    title: incident.title,
+    services: incident.services,
+    type: incident.type,
     updates: [initialUpdate],
+    timestamp: timestamp,
   })
 }
 
+/*
 export const addUpdateToIncident = async (
   incidentId = 'Qgiup9L0mzx4417v8EFd'
 ) => {
@@ -106,3 +126,17 @@ export const addUpdateToIncident = async (
     updates: [...existingUpdates, newIncidentUpdate],
   })
 }
+*/
+
+/* export const Services: Array<ServicesType> = [
+  'flights',
+  'hotels',
+  'cars',
+  'trains',
+]
+
+export type ServicesType = 'flights' | 'hotels' | 'cars' | 'trains' */
+
+export const Services: Array<string> = ['flights', 'hotels', 'cars', 'trains']
+
+export type ServicesType = typeof Services[number]
