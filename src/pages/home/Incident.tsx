@@ -19,7 +19,9 @@ const ServiceList = styled.ul`
 const Card = styled.div<{ state: IncidentInterface['type'] | 'stable' }>`
   box-shadow: 0 0 4px 2px #0003;
   padding: 1em;
-  margin: 2em 4em;
+  box-sizing: border-box;
+  margin: 2em auto;
+  width: 80vw;
   border-left: 6px solid
     ${props =>
       props.state === 'down'
@@ -54,11 +56,9 @@ const Incident = (props: Props) => {
         ))}
       </ServiceList>
 
-        {incident.updates.map(update => (
-            <IncidentUpdate key={update.timestamp.seconds}
-                            update={update} />
-        ))}
-
+      {incident.updates.map(update => (
+        <IncidentUpdate key={update.timestamp.seconds} update={update} />
+      ))}
     </Card>
   )
 }
