@@ -26,9 +26,8 @@ const Card = styled.div`
   width: 80vw;
 `
 
-const TitleWrapper = styled.div<{
-  state: IncidentInterface['type'] | 'stable'
-}>`
+type IncidentState = IncidentInterface['type'] | 'stable'
+const TitleWrapper = styled.div<{ state: IncidentState }>`
   margin: 1em auto;
   width: 80vw;
   background-color: ${props =>
