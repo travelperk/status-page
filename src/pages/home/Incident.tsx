@@ -3,6 +3,7 @@ import { Incident as IncidentInterface } from '../../api'
 import IncidentUpdate from './IncidentUpdate'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import {LinkButton} from "../../components/Buttons";
 
 const ServiceList = styled.ul`
   padding-left: 0;
@@ -19,10 +20,8 @@ const ServiceList = styled.ul`
     margin-bottom: 0.8em;
   }
 `
-const Card = styled(Link)<{ state: IncidentInterface['type'] | 'stable' }>`
+const Card = styled.div<{ state: IncidentInterface['type'] | 'stable' }>`
   display: block;
-  text-decoration: none;
-  color: inherit;
   box-shadow: 0 0 4px 2px #0003;
   padding: 1em;
   box-sizing: border-box;
@@ -49,11 +48,15 @@ const IncidentHeader = styled(Link)`
   }
 `
 
-const getState = (indicent: IncidentInterface) => {
-  const isActive = indicent.updates.every(update => update.type !== 'resolved')
+const AddUpdateButtonWrapper = styled.div`
+  margin: 2rem 2rem;
+`
+
+const getState = (incident: IncidentInterface) => {
+  const isActive = incident.updates.every(update => update.type !== 'resolved')
   if (!isActive) return 'stable'
 
-  return indicent.type
+  return incident.type
 }
 
 type Props = {
@@ -65,7 +68,7 @@ const Incident = (props: Props) => {
     incident.updates[incident.updates.length - 1].timestamp
   const state = getState(incident)
   return (
-    <Card state={state} to={`/${incident.id}`}>
+    <Card state={state}>
       <IncidentHeader to={`/edit/${incident.id}`}>
         <h1>{incidentTimestamp.toDate().toUTCString()}</h1>
         <h2>{incident.title}</h2>
@@ -75,6 +78,9 @@ const Incident = (props: Props) => {
           ))}
         </ServiceList>
       </IncidentHeader>
+      <AddUpdateButtonWrapper>
+        <LinkButton to={`/update/${incident.id}`}>Add an update</LinkButton>
+      </AddUpdateButtonWrapper>
       {incident.updates.map(update => (
         <IncidentUpdate key={update.timestamp.seconds} update={update} />
       ))}

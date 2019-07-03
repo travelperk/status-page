@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import styled from 'styled-components'
 import {
   updateIncident,
   getIncident,
@@ -8,7 +9,7 @@ import {
 } from '../../api/index'
 import { History } from 'history'
 import { RouteComponentProps } from 'react-router-dom'
-import { Button } from '../../components/Buttons'
+import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
 import { FormItem } from '../../components/FormItem'
 import { FormWrapper } from '../../components/FormWrapper'
 
@@ -104,7 +105,10 @@ const IncidentEdit = (props: Props) => {
             </label>
           ))}
         </div>
-        <Button>Update incident</Button>
+        <ButtonWrapper>
+          <Button>Update incident</Button>
+          <LinkButton to="/">Cancel</LinkButton>
+        </ButtonWrapper>
       </form>
     </FormWrapper>
   )
