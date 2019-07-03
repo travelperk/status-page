@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+/* eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars */
+import * as types from 'styled-components/cssprop'
 
 ReactDOM.render(<App />, document.getElementById('root'))
 

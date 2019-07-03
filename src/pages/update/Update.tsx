@@ -34,8 +34,6 @@ const Update = (props: Props) => {
       <form onSubmit={handleSubmit}>
         <h1>Update incident</h1>
         <FormItem>
-          {/* 
-        // @ts-ignore */}
           <label css="margin-bottom: 0.5em" htmlFor="description">
             Description
           </label>
@@ -46,8 +44,6 @@ const Update = (props: Props) => {
           />
         </FormItem>
         <FormItem>
-          {/* 
-        // @ts-ignore */}
           <label css="margin-bottom: 0.5em" htmlFor="type">
             Type
           </label>
