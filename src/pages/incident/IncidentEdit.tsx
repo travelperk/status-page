@@ -22,7 +22,6 @@ type Props = RouteComponentProps<MatchParams> & {history: History}
 const IncidentEdit = (props: Props) => {
   const loadingTitle = 'Loading ...'
   const [title, setTitle] = useState(loadingTitle)
-  const [type, setType] = useState<Incident['type']>('degraded')
   const [services, setServices] = useState<Array<ServicesType>>([])
   const [incident, setIncident] = useState<Incident>()
   useEffect(() => {
@@ -32,21 +31,12 @@ const IncidentEdit = (props: Props) => {
 
   if (incident && title === loadingTitle) {
     setTitle(incident.title)
-    setType(incident.type)
     setServices(incident.services)
   }
 
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-
-    await updateIncident({
-      id: incident ? incident.id : '',
-      title,
-      type,
-      services,
-      updates: incident ? incident.updates : [],
-    })
-
+    await updateIncident(incident ? incident.id : '', title, services)
     props.history.replace('/')
   }
 
@@ -72,21 +62,6 @@ const IncidentEdit = (props: Props) => {
             onChange={evt => setTitle(evt.currentTarget.value)}
             value={title}
           />
-        </FormItem>
-        <FormItem>
-          <label css="margin-bottom: 0.5em" htmlFor="type">
-            Type
-          </label>
-          <select
-            id="type"
-            onChange={evt =>
-              setType(evt.currentTarget.value as Incident['type'])
-            }
-            value={type}
-          >
-            <option value="degraded">Degraded</option>
-            <option value="down">Down</option>
-          </select>
         </FormItem>
         <div css="margin-bottom: 1em">
           <p>Services affected</p>

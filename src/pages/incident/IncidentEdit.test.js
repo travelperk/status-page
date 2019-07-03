@@ -42,7 +42,6 @@ describe('IncidentEdit', () => {
       </MemoryRouter>
     )
     expect(getByDisplayValue('Loading ...')).toBeInTheDocument()
-    expect(getByLabelText('Type')).toBeInTheDocument()
     await waitForElement(() => getByDisplayValue(incident.title))
     incident.services.forEach(service => {
       const serviceCheckbox = getByLabelText(service)
@@ -59,7 +58,7 @@ describe('IncidentEdit', () => {
           })
         }, 0)
       })
-      const { debug, getByDisplayValue, getByLabelText, getByText } = render(
+      const { getByDisplayValue, getByLabelText, getByText } = render(
         <MemoryRouter>
           <IncidentEdit match={{ params: { id: incident.id } }} />
         </MemoryRouter>
@@ -68,12 +67,8 @@ describe('IncidentEdit', () => {
 
       const updatedTitle = 'Updated title'
       const updatedServices = ['hotels']
-      const updatedType = 'down'
 
       userEvent.type(getByLabelText('Title'), updatedTitle)
-      fireEvent.change(getByLabelText('Type'), {
-        target: { value: updatedType },
-      })
 
       Services.forEach(service => {
         const checkbox = getByLabelText(service)
@@ -90,16 +85,10 @@ describe('IncidentEdit', () => {
 
       userEvent.click(getByText('Update incident', { selector: 'button' }))
       expect(updateIncident).toBeCalledTimes(1)
-      expect(updateIncident).toBeCalledWith({
-        id: incident.id,
-        services: updatedServices,
-        title: updatedTitle,
-        type: updatedType,
-        updates: [
-          {
-            id: incident.updates[0].id,
-          },
-        ],
-      })
+      expect(updateIncident).toBeCalledWith(
+        incident.id,
+        updatedTitle,
+        updatedServices
+      )
     })
 })
