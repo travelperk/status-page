@@ -1,40 +1,50 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {
-  createIncident,
+  updateIncident,
+  getIncident,
   Incident,
   Services,
   ServicesType,
 } from '../../api/index'
 import { History } from 'history'
-import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
+import { RouteComponentProps } from 'react-router-dom'
+import { Button } from '../../components/Buttons'
 import { FormItem } from '../../components/FormItem'
 import { FormWrapper } from '../../components/FormWrapper'
-import styled from 'styled-components'
 
-type Props = {
-  history: History
+
+type MatchParams = {
+  id: string
 }
 
-const ServicesWrapper = styled.div`
-  text-transform: capitalize;
-  display: inline;
-  margin-right: 1em;
-`
+type Props = RouteComponentProps<MatchParams> & {history: History}
 
-const Create = (props: Props) => {
-  const [title, setTitle] = useState('')
+const IncidentEdit = (props: Props) => {
+  const loadingTitle = 'Loading ...'
+  const [title, setTitle] = useState(loadingTitle)
   const [type, setType] = useState<Incident['type']>('degraded')
   const [services, setServices] = useState<Array<ServicesType>>([])
-  const [description, setDescription] = useState('')
+  const [incident, setIncident] = useState<Incident>()
+  useEffect(() => {
+    getIncident(props.match.params.id, setIncident)
+  }, [props.match.params.id])
+
+
+  if (incident && title === loadingTitle) {
+    setTitle(incident.title)
+    setType(incident.type)
+    setServices(incident.services)
+  }
 
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
 
-    await createIncident({
+    await updateIncident({
+      id: incident ? incident.id : '',
       title,
       type,
       services,
-      description,
+      updates: incident ? incident.updates : [],
     })
 
     props.history.replace('/')
@@ -50,7 +60,7 @@ const Create = (props: Props) => {
 
   return (
     <FormWrapper>
-      <h1>Create incident</h1>
+      <h1>Update incident</h1>
       <form onSubmit={handleSubmit}>
         <FormItem>
           <label css="margin-bottom: 0.5em" htmlFor="title">
@@ -61,16 +71,6 @@ const Create = (props: Props) => {
             type="text"
             onChange={evt => setTitle(evt.currentTarget.value)}
             value={title}
-          />
-        </FormItem>
-        <FormItem>
-          <label css="margin-bottom: 0.5em" htmlFor="description">
-            Description
-          </label>
-          <textarea
-            id="description"
-            onChange={evt => setDescription(evt.currentTarget.value)}
-            value={description}
           />
         </FormItem>
         <FormItem>
@@ -91,25 +91,23 @@ const Create = (props: Props) => {
         <div css="margin-bottom: 1em">
           <p>Services affected</p>
           {Services.map(service => (
-            <ServicesWrapper key={service}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={services.includes(service)}
-                  onChange={() => toggleType(service)}
-                />
-                {service}
-              </label>
-            </ServicesWrapper>
+            <label
+              key={service}
+              css="margin-right: 1em; text-transform: capitalize"
+            >
+              <input
+                type="checkbox"
+                checked={services.includes(service)}
+                onChange={() => toggleType(service)}
+              />
+              {service}
+            </label>
           ))}
         </div>
-        <ButtonWrapper>
-          <Button>Create incident</Button>
-          <LinkButton to="/">Cancel</LinkButton>
-        </ButtonWrapper>
+        <Button>Update incident</Button>
       </form>
     </FormWrapper>
   )
 }
 
-export default Create
+export default IncidentEdit

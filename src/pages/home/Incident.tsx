@@ -40,6 +40,15 @@ const Card = styled(Link)<{ state: IncidentInterface['type'] | 'stable' }>`
   }
 `
 
+const IncidentHeader = styled(Link)`
+  text-decoration: none;
+  display: inline-block;  
+  padding: 1em;
+  &:hover {
+    box-shadow: 0 0 4px 2px #0003;
+  }
+`
+
 const getState = (indicent: IncidentInterface) => {
   const isActive = indicent.updates.every(update => update.type !== 'resolved')
   if (!isActive) return 'stable'
@@ -57,14 +66,15 @@ const Incident = (props: Props) => {
   const state = getState(incident)
   return (
     <Card state={state} to={`/${incident.id}`}>
-      <h1>{incidentTimestamp.toDate().toUTCString()}</h1>
-      <h2>{incident.title}</h2>
-      <ServiceList>
-        {incident.services.map(service => (
-          <li key={service}>{service}</li>
-        ))}
-      </ServiceList>
-
+      <IncidentHeader to={`/edit/${incident.id}`}>
+        <h1>{incidentTimestamp.toDate().toUTCString()}</h1>
+        <h2>{incident.title}</h2>
+        <ServiceList>
+          {incident.services.map(service => (
+            <li key={service}>{service}</li>
+          ))}
+        </ServiceList>
+      </IncidentHeader>
       {incident.updates.map(update => (
         <IncidentUpdate key={update.timestamp.seconds} update={update} />
       ))}
