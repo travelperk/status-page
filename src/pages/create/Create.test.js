@@ -28,12 +28,15 @@ describe('Create', () => {
 
     userEvent.click(getByText('Create incident', { selector: 'button' }))
     expect(createIncident).toHaveBeenCalledTimes(1)
-    expect(createIncident).toHaveBeenCalledWith({
-      description: 'Dancing Elvis',
-      services: ['flights'],
-      title: 'Whoo hoo!',
-      type: 'degraded',
-    })
+    expect(createIncident).toHaveBeenCalledWith(
+      { email: '' },
+      {
+        description: 'Dancing Elvis',
+        services: ['flights'],
+        title: 'Whoo hoo!',
+        type: 'degraded',
+      }
+    )
     await wait(() => expect(history.replace).toHaveBeenCalledWith('/'))
     expect(history.replace).toHaveBeenCalledTimes(1)
   })

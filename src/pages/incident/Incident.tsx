@@ -23,13 +23,13 @@ const Card = styled.div`
   color: inherit;
   padding: 1em;
   margin: 2em auto;
-  width: 80vw;
+  width: 60vw;
 `
 
 type IncidentState = IncidentInterface['type'] | 'stable'
 const TitleWrapper = styled.div<{ state: IncidentState }>`
   margin: 1em auto;
-  width: 80vw;
+  width: 60vw;
   background-color: ${props =>
     props.state === 'down'
       ? '#CC3232'

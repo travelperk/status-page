@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import {
   getIncident,
@@ -9,6 +9,7 @@ import {
 import { FormWrapper } from '../../components/FormWrapper'
 import { FormItem } from '../../components/FormItem'
 import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
+import UserContext from '../../contexts/UserContext'
 
 type MatchParams = {
   id: string
@@ -20,10 +21,12 @@ const Update = (props: Props) => {
   const [description, setDescription] = useState('')
   const [type, setType] = useState<IncidentUpdate['type']>('update')
 
+  const user = useContext(UserContext)
+
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
 
-    await addUpdateToIncident(props.match.params.id, description, type)
+    await addUpdateToIncident(user, props.match.params.id, description, type)
 
     props.history.replace(`/${props.match.params.id}`)
   }

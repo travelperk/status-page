@@ -23,10 +23,14 @@ const Wrapper = styled.div`
   display: flex;
 `
 
-const TimeWrapper = styled.span`
+const AuthorWrapper = styled.div`
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 0.5em;
+`
+
+const TimeWrapper = styled.div`
   font-style: italic;
   color: rgba(0, 0, 0, 0.5);
-  line-height: 2em;
 `
 
 const IncidentUpdate = (props: Props) => {
@@ -34,9 +38,9 @@ const IncidentUpdate = (props: Props) => {
   return (
     <Wrapper>
       <UpdateWrapper state={update.type}>{update.type}</UpdateWrapper>
-      <div css="margin-left: 1em">
+      <div>
         {update.description}
-        <br />
+        <AuthorWrapper>{update.author}</AuthorWrapper>
         <TimeWrapper>{update.timestamp.toDate().toUTCString()}</TimeWrapper>
       </div>
     </Wrapper>

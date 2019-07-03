@@ -50,6 +50,7 @@ export interface IncidentUpdate {
   description: string
   type: 'investigating' | 'update' | 'resolved'
   timestamp: FirebaseTimestamp
+  author: string
 }
 
 export interface Incident {
@@ -83,12 +84,13 @@ interface PartialUpdate {
   type: IncidentUpdate['type']
 }
 
-export const createIncidentUpdate = async (update: PartialUpdate) => {
+const createIncidentUpdate = async (user: User, update: PartialUpdate) => {
   return await updatesDb.add({
     description: update.description,
     timestamp:
       update.timestamp || firebase.firestore.FieldValue.serverTimestamp(),
     type: update.type,
+    author: user.email,
   })
 }
 
@@ -98,9 +100,9 @@ interface PartialIncident {
   services: Array<ServicesType>
   description: PartialUpdate['description']
 }
-export const createIncident = async (incident: PartialIncident) => {
+export const createIncident = async (user: User, incident: PartialIncident) => {
   const timestamp = firebase.firestore.FieldValue.serverTimestamp()
-  const initialUpdate = await createIncidentUpdate({
+  const initialUpdate = await createIncidentUpdate(user, {
     description: incident.description,
     type: 'investigating',
     timestamp: timestamp,
@@ -124,11 +126,15 @@ export const updateIncident = async (id: Incident['id'], title: Incident['title'
 }
 
 export const addUpdateToIncident = async (
+  user: User,
   incidentId: string,
   description: string,
   type: IncidentUpdate['type']
 ) => {
-  const newIncidentUpdate = await createIncidentUpdate({ description, type })
+  const newIncidentUpdate = await createIncidentUpdate(user, {
+    description,
+    type,
+  })
   const incident = incidentsDb.doc(incidentId)
   const incidentData = await getDocData(incident)
   const existingUpdates = incidentData.updates

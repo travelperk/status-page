@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useContext, useState} from 'react'
 import {
   createIncident,
   Incident,
@@ -10,6 +10,7 @@ import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
 import { FormItem } from '../../components/FormItem'
 import { FormWrapper } from '../../components/FormWrapper'
 import styled from 'styled-components'
+import UserContext from '../../contexts/UserContext'
 
 type Props = {
   history: History
@@ -27,10 +28,12 @@ const Create = (props: Props) => {
   const [services, setServices] = useState<Array<ServicesType>>([])
   const [description, setDescription] = useState('')
 
+  const user = useContext(UserContext)
+
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
 
-    await createIncident({
+    await createIncident(user, {
       title,
       type,
       services,
