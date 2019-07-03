@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, Link } from 'react-router-dom'
 import { getIncident, addUpdateToIncident, IncidentUpdate } from '../../api'
 import { FormWrapper } from '../../components/FormWrapper'
 import { FormItem } from '../../components/FormItem'
 import Button from '../../components/Button'
+import { ButtonWrapper } from '../../components/ButtonWrapper'
 
 type MatchParams = {
   id: string
@@ -20,10 +21,6 @@ const Update = (props: Props) => {
 
     await addUpdateToIncident(props.match.params.id, description, type)
 
-    props.history.replace('/')
-  }
-
-  const cancelSubmit = () => {
     props.history.replace('/')
   }
 
@@ -63,8 +60,12 @@ const Update = (props: Props) => {
             <option value="resolved">Resolved</option>
           </select>
         </FormItem>
-        <Button>Update incident</Button>
-        <Button onClick={cancelSubmit}>Cancel</Button>
+        <ButtonWrapper>
+          <Button>Create update</Button>
+          <Link to="/">
+            <Button>Cancel</Button>
+          </Link>
+        </ButtonWrapper>
       </form>
     </FormWrapper>
   )

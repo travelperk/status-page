@@ -9,6 +9,8 @@ import { History } from 'history'
 import Button from '../../components/Button'
 import { FormItem } from '../../components/FormItem'
 import { FormWrapper } from '../../components/FormWrapper'
+import { Link } from 'react-router-dom'
+import { ButtonWrapper } from '../../components/ButtonWrapper';
 
 type Props = {
   history: History
@@ -30,10 +32,6 @@ const Create = (props: Props) => {
       description,
     })
 
-    props.history.replace('/')
-  }
-
-  const cancelSubmit = () => {
     props.history.replace('/')
   }
 
@@ -101,8 +99,12 @@ const Create = (props: Props) => {
             </label>
           ))}
         </div>
-        <Button>Create incident</Button>
-        <Button onClick={cancelSubmit}>Cancel</Button>
+        <ButtonWrapper>
+          <Button>Create incident</Button>
+          <Link to="/">
+            <Button>Cancel</Button>
+          </Link>
+        </ButtonWrapper>
       </form>
     </FormWrapper>
   )
