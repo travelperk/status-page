@@ -20,7 +20,7 @@ const Update = (props: Props) => {
 
     await addUpdateToIncident(props.match.params.id, description, type)
 
-    props.history.replace('/')
+    props.history.replace(`/${props.match.params.id}`)
   }
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Update = (props: Props) => {
     return unsubscribe
   }, [props.match.params.id])
 
-  if (!incident) return <div>Loading</div>
+  if (!incident) return <div>Loading...</div>
 
   return (
     <FormWrapper>

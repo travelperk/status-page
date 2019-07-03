@@ -56,7 +56,7 @@ const Incident = (props: Props) => {
     incident.updates[incident.updates.length - 1].timestamp
   const state = getState(incident)
   return (
-    <Card state={state} to={`/update/${incident.id}`}>
+    <Card state={state} to={`/${incident.id}`}>
       <h1>{incidentTimestamp.toDate().toUTCString()}</h1>
       <h2>{incident.title}</h2>
       <ServiceList>
