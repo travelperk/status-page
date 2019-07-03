@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import { Redirect, RouteComponentProps } from 'react-router-dom'
 import {
   getIncident,
   addUpdateToIncident,
@@ -37,7 +37,7 @@ const Update = (props: Props) => {
 
   if (incident.updates.some(update => update.type === 'resolved')) {
     // If it's already resolved, we go back to the incident status page
-    props.history.replace(`/${incident.id}`)
+    return <Redirect to={`/${incident.id}`} />
   }
 
   return (
