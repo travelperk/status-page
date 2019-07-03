@@ -6,9 +6,10 @@ import {
   ServicesType,
 } from '../../api/index'
 import { History } from 'history'
-import Button from '../../components/Button'
+import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
 import { FormItem } from '../../components/FormItem'
 import { FormWrapper } from '../../components/FormWrapper'
+import { Link } from 'react-router-dom'
 
 type Props = {
   history: History
@@ -97,7 +98,10 @@ const Create = (props: Props) => {
             </label>
           ))}
         </div>
-        <Button>Create incident</Button>
+        <ButtonWrapper>
+          <Button>Create incident</Button>
+          <LinkButton to="/">Cancel</LinkButton>
+        </ButtonWrapper>
       </form>
     </FormWrapper>
   )

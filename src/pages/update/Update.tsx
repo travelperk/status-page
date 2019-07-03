@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { getIncident, addUpdateToIncident, IncidentUpdate } from '../../api'
 import { FormWrapper } from '../../components/FormWrapper'
 import { FormItem } from '../../components/FormItem'
-import Button from '../../components/Button'
+import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
 
 type MatchParams = {
   id: string
@@ -22,6 +22,7 @@ const Update = (props: Props) => {
 
     props.history.replace('/')
   }
+
   useEffect(() => {
     const unsubscribe = getIncident(props.match.params.id, setIncident)
     return unsubscribe
@@ -58,7 +59,10 @@ const Update = (props: Props) => {
             <option value="resolved">Resolved</option>
           </select>
         </FormItem>
-        <Button>Update incident</Button>
+        <ButtonWrapper>
+          <Button>Create update</Button>
+          <LinkButton to="/">Cancel</LinkButton>
+        </ButtonWrapper>
       </form>
     </FormWrapper>
   )
