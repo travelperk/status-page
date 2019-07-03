@@ -1,9 +1,9 @@
 import React from 'react'
 import { Incident as IncidentInterface } from '../../api'
 import IncidentUpdate from './IncidentUpdate'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
-import {LinkButton} from "../../components/Buttons";
+import { LinkButton } from '../../components/Buttons'
 
 const ServiceList = styled.ul`
   padding-left: 0;
@@ -23,7 +23,7 @@ const ServiceList = styled.ul`
 const Card = styled.div<{ state: IncidentInterface['type'] | 'stable' }>`
   display: block;
   box-shadow: 0 0 4px 2px #0003;
-  padding: 1em;
+  padding: 1em 2em;
   box-sizing: border-box;
   margin: 2em auto;
   width: 60vw;
@@ -39,13 +39,12 @@ const Card = styled.div<{ state: IncidentInterface['type'] | 'stable' }>`
   }
 `
 
-const IncidentHeader = styled(Link)`  
-  display: inline-block;  
-  padding: 1em;
-`
-
-const AddUpdateButtonWrapper = styled.div`
-  margin: 2rem 2rem;
+const TitleLink = styled(Link)`
+  color: #333;
+  text-decoration: none;
+  :hover {
+    text-decoration: underline;
+  }
 `
 
 const getState = (incident: IncidentInterface) => {
@@ -65,18 +64,21 @@ const IncidentCard = (props: Props) => {
   const state = getState(incident)
   return (
     <Card state={state}>
-      <IncidentHeader to={`/edit/${incident.id}`}>
+      <TitleLink to={`/edit/${incident.id}`}>
         <h1>{incidentTimestamp.toDate().toUTCString()}</h1>
         <h2>{incident.title}</h2>
-        <ServiceList>
-          {incident.services.map(service => (
-            <li key={service}>{service}</li>
-          ))}
-        </ServiceList>
-      </IncidentHeader>
-      <AddUpdateButtonWrapper>
-        <LinkButton to={`/update/${incident.id}`}>Add an update</LinkButton>
-      </AddUpdateButtonWrapper>
+      </TitleLink>
+      <ServiceList>
+        {incident.services.map(service => (
+          <li key={service}>{service}</li>
+        ))}
+      </ServiceList>
+      <LinkButton
+        to={`/update/${incident.id}`}
+        css="display:inline-block;margin-top:1em;"
+      >
+        Add an update
+      </LinkButton>
       {incident.updates.map(update => (
         <IncidentUpdate key={update.timestamp.seconds} update={update} />
       ))}
