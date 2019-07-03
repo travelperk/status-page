@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 const AddIncident = styled(Link)`
   position: fixed;
   bottom: 8vh;
-  right: calc(10vw - 2em / 2 - 6px);
+  right: calc(10vw - 2em / 2);
   border-radius: 50%;
   width: 2em;
   height: 2em;
@@ -20,6 +20,11 @@ const AddIncident = styled(Link)`
   text-decoration: none;
   text-align: center;
   line-height: 1.8em;
+
+  @media (max-width: 768px) {
+    bottom: 4vh;
+    right: 2vw;
+  }
 `
 
 const Home = () => {

@@ -8,6 +8,7 @@ const ServiceList = styled.ul`
   padding-left: 0;
   list-style-type: none;
   display: flex;
+  flex-wrap: wrap;
   > * {
     background-color: #147cba;
     color: white;
@@ -15,6 +16,7 @@ const ServiceList = styled.ul`
     border-radius: 3px;
     text-transform: uppercase;
     margin-right: 1em;
+    margin-bottom: 0.8em;
   }
 `
 const Card = styled(Link)<{ state: IncidentInterface['type'] | 'stable' }>`
@@ -25,7 +27,7 @@ const Card = styled(Link)<{ state: IncidentInterface['type'] | 'stable' }>`
   padding: 1em;
   box-sizing: border-box;
   margin: 2em auto;
-  width: 80vw;
+  width: 60vw;
   border-left: 6px solid
     ${props =>
       props.state === 'down'
@@ -33,6 +35,9 @@ const Card = styled(Link)<{ state: IncidentInterface['type'] | 'stable' }>`
         : props.state === 'degraded'
         ? '#FFC82C'
         : '#0FA863'};
+  @media (max-width: 768px) {
+    width: 90vw;
+  }
 `
 
 const getState = (indicent: IncidentInterface) => {
