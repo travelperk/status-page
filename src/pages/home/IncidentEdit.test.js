@@ -1,4 +1,4 @@
-import { render, waitForElement } from '@testing-library/react'
+import { render, waitForElement, fireEvent } from '@testing-library/react'
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
@@ -59,13 +59,7 @@ describe('IncidentEdit', () => {
           })
         }, 0)
       })
-      const {
-        debug,
-        getByDisplayValue,
-        getByLabelText,
-        getByText,
-        getByTestId,
-      } = render(
+      const { debug, getByDisplayValue, getByLabelText, getByText } = render(
         <MemoryRouter>
           <IncidentEdit match={{ params: { id: incident.id } }} />
         </MemoryRouter>
@@ -77,7 +71,9 @@ describe('IncidentEdit', () => {
       const updatedType = 'down'
 
       userEvent.type(getByLabelText('Title'), updatedTitle)
-      userEvent.selectOptions(getByLabelText('Type'), [updatedType])
+      fireEvent.change(getByLabelText('Type'), {
+        target: { value: updatedType },
+      })
 
       Services.forEach(service => {
         const checkbox = getByLabelText(service)
