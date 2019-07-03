@@ -8,7 +8,7 @@ import Home from './pages/home/Home'
 import Create from './pages/create/Create'
 import Update from './pages/update/Update'
 import Incident from './pages/incident/Incident'
-import IncidentEdit from './pages/home/IncidentEdit'
+import IncidentEdit from './pages/incident/IncidentEdit'
 
 const LoginPage = styled.div`
   display: flex;

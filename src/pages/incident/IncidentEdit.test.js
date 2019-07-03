@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
 import { act } from 'react-dom/test-utils'
 import IncidentEdit from './IncidentEdit'
-import { getIncident, updateIncident, Services } from '../../api/index'
+import { getIncident, updateIncident, Services } from '../../api'
 
 jest.mock('../../api/index', () => {
   const originalModule = jest.requireActual('../../api/index')
@@ -28,7 +28,7 @@ const incident = {
 }
 
 describe('IncidentEdit', () => {
-  it('should render existing values of Incident in form', async () => {
+  it('should render existing values of IncidentCard in form', async () => {
     getIncident.mockImplementationOnce((id, setter) => {
       setTimeout(() => {
         act(() => {

@@ -39,13 +39,9 @@ const Card = styled.div<{ state: IncidentInterface['type'] | 'stable' }>`
   }
 `
 
-const IncidentHeader = styled(Link)`
-  text-decoration: none;
+const IncidentHeader = styled(Link)`  
   display: inline-block;  
   padding: 1em;
-  &:hover {
-    box-shadow: 0 0 4px 2px #0003;
-  }
 `
 
 const AddUpdateButtonWrapper = styled.div`
@@ -62,7 +58,7 @@ const getState = (incident: IncidentInterface) => {
 type Props = {
   incident: IncidentInterface
 }
-const Incident = (props: Props) => {
+const IncidentCard = (props: Props) => {
   const { incident } = props
   const incidentTimestamp =
     incident.updates[incident.updates.length - 1].timestamp
@@ -88,4 +84,4 @@ const Incident = (props: Props) => {
   )
 }
 
-export default Incident
+export default IncidentCard

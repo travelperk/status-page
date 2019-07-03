@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import styled from 'styled-components'
 import {
   updateIncident,
   getIncident,
   Incident,
   Services,
   ServicesType,
-} from '../../api/index'
+} from '../../api'
 import { History } from 'history'
 import { RouteComponentProps } from 'react-router-dom'
 import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'

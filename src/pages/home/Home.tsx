@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getAllIncidents, Incident as IncidentInterface } from '../../api/index'
 import Status from './Status'
-import Incident from './Incident'
+import IncidentCard from './IncidentCard'
 import { PlusButton } from '../../components/PlusButton'
 
 const Home = () => {
@@ -20,7 +20,7 @@ const Home = () => {
       <Status incidentList={incidentList} />
       {incidentList.map(incident => {
         return (
-          <Incident
+          <IncidentCard
             key={incident.updates[0].timestamp.seconds}
             incident={incident}
           />
