@@ -13,4 +13,4 @@ deploy:
   script: npm run deploy:ci
   skip_cleanup: true
   on:
-    branch: release
+    branch: master
