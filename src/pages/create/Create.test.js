@@ -14,7 +14,7 @@ jest.mock('../../api/index', () => {
 })
 
 describe('Create', () => {
-  it('should allow the user to create a new Incident', async () => {
+  it('should allow the user to create a new IncidentCard', async () => {
     const history = { replace: jest.fn() }
     const { getByLabelText, getByText } = render(
       <MemoryRouter>

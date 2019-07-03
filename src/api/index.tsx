@@ -115,6 +115,14 @@ export const createIncident = async (incident: PartialIncident) => {
   })
 }
 
+export const updateIncident = async (id: Incident['id'], title: Incident['title'], services: Incident['services']) => {
+  const updateObject = {
+    title: title,
+    services: services,
+  }
+  incidentsDb.doc(id).update(updateObject)
+}
+
 export const addUpdateToIncident = async (
   incidentId: string,
   description: string,

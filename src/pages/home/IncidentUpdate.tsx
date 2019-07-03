@@ -18,7 +18,7 @@ const StatusLabel = styled.span<{ state: IncidentUpdateInterface['type'] }>`
 `
 
 const StatusWrapper = styled.div`
-  margin-bottom: 2rem;
+  margin: 2rem 2rem;
 `
 
 const TimeWrapper = styled.span`
