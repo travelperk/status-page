@@ -50,9 +50,10 @@ describe('Home', () => {
   it.each([['degraded'], ['down']])(
     'should show banner with status %s',
     async state => {
-      getAllIncidents.mockImplementationOnce(fn =>
+      getAllIncidents.mockImplementationOnce(fn => {
         setTimeout(() => fn([incidentFabricator(state)]), 0)
-      )
+        return jest.fn()
+      })
       const { getByText } = render(
         <MemoryRouter>
           <Home />
@@ -66,9 +67,10 @@ describe('Home', () => {
   )
 
   it('should show banner with status stable', async () => {
-    getAllIncidents.mockImplementationOnce(fn =>
+    getAllIncidents.mockImplementationOnce(fn => {
       setTimeout(() => fn([resolvedIncidentFabricator()]), 0)
-    )
+      return jest.fn()
+    })
     const { getByText } = render(
       <MemoryRouter>
         <Home />
