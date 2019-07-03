@@ -10,10 +10,17 @@ import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
 import { FormItem } from '../../components/FormItem'
 import { FormWrapper } from '../../components/FormWrapper'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 type Props = {
   history: History
 }
+
+const ServicesWrapper = styled.div`
+  text-transform: capitalize;
+  display: inline;
+  margin-right: 1em;
+`
 
 const Create = (props: Props) => {
   const [title, setTitle] = useState('')
@@ -85,17 +92,16 @@ const Create = (props: Props) => {
         <div css="margin-bottom: 1em">
           <p>Services affected</p>
           {Services.map(service => (
-            <label
-              key={service}
-              css="margin-right: 1em; text-transform: capitalize"
-            >
-              <input
-                type="checkbox"
-                checked={services.includes(service)}
-                onChange={() => toggleType(service)}
-              />
-              {service}
-            </label>
+            <ServicesWrapper>
+              <label key={service}>
+                <input
+                  type="checkbox"
+                  checked={services.includes(service)}
+                  onChange={() => toggleType(service)}
+                />
+                {service}
+              </label>
+            </ServicesWrapper>
           ))}
         </div>
         <ButtonWrapper>

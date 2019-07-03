@@ -1,7 +1,8 @@
 import React from 'react'
 import { wait, render } from '@testing-library/react'
-import Create from './Create'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router'
+import Create from './Create'
 import { createIncident } from '../../api/index'
 
 jest.mock('../../api/index', () => {
@@ -15,7 +16,11 @@ jest.mock('../../api/index', () => {
 describe('Create', () => {
   it('should allow the user to create a new Incident', async () => {
     const history = { replace: jest.fn() }
-    const { getByLabelText, getByText } = render(<Create history={history} />)
+    const { getByLabelText, getByText } = render(
+      <MemoryRouter>
+        <Create history={history} />
+      </MemoryRouter>
+    )
     userEvent.type(getByLabelText('Title'), 'Whoo hoo!')
     userEvent.type(getByLabelText('Description'), 'Dancing Elvis')
     userEvent.click(getByLabelText('flights'))
