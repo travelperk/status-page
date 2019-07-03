@@ -46,8 +46,6 @@ const Create = (props: Props) => {
       <h1>Create incident</h1>
       <form onSubmit={handleSubmit}>
         <FormItem>
-          {/* 
-        // @ts-ignore */}
           <label css="margin-bottom: 0.5em" htmlFor="title">
             Title
           </label>
@@ -59,8 +57,6 @@ const Create = (props: Props) => {
           />
         </FormItem>
         <FormItem>
-          {/* 
-        // @ts-ignore */}
           <label css="margin-bottom: 0.5em" htmlFor="description">
             Description
           </label>
@@ -71,8 +67,6 @@ const Create = (props: Props) => {
           />
         </FormItem>
         <FormItem>
-          {/* 
-        // @ts-ignore */}
           <label css="margin-bottom: 0.5em" htmlFor="type">
             Type
           </label>
@@ -87,12 +81,9 @@ const Create = (props: Props) => {
             <option value="down">Down</option>
           </select>
         </FormItem>
-        {/* 
-        // @ts-ignore */}
         <div css="margin-bottom: 1em">
           <p>Services affected</p>
           {Services.map(service => (
-            // @ts-ignore
             <label
               key={service}
               css="margin-right: 1em; text-transform: capitalize"
