@@ -39,9 +39,9 @@ const Update = (props: Props) => {
       incident.updates.some(update => update.type === 'resolved')
     ) {
       // If it's already resolved, we go back to the incident status page
-      props.history.replace(`/${props.match.params.id}`)
+      props.history.replace(`/${incident.id}`)
     }
-  }, [incident])
+  }, [incident, props.history])
 
   if (!incident) return <div>Loading...</div>
 

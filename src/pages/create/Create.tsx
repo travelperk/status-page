@@ -9,7 +9,6 @@ import { History } from 'history'
 import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
 import { FormItem } from '../../components/FormItem'
 import { FormWrapper } from '../../components/FormWrapper'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 type Props = {
