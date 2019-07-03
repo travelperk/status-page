@@ -30,7 +30,8 @@ const AddIncident = styled(Link)`
 const Home = () => {
   const [incidentList, setIncidentList] = useState<Array<IncidentInterface>>()
   useEffect(() => {
-    getAllIncidents(setIncidentList)
+    const unsubscribe = getAllIncidents(setIncidentList)
+    return unsubscribe
   }, [])
 
   if (!incidentList) {
