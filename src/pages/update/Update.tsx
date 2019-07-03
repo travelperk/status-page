@@ -23,7 +23,8 @@ const Update = (props: Props) => {
     props.history.replace('/')
   }
   useEffect(() => {
-    getIncident(props.match.params.id, setIncident)
+    const unsubscribe = getIncident(props.match.params.id, setIncident)
+    return unsubscribe
   }, [props.match.params.id])
 
   if (!incident) return <div>Loading</div>
