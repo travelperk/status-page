@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
-import { getIncident, addUpdateToIncident, IncidentUpdate } from '../../api'
+import { Redirect, RouteComponentProps } from 'react-router-dom'
+import {
+  getIncident,
+  addUpdateToIncident,
+  IncidentUpdate,
+  Incident,
+} from '../../api'
 import { FormWrapper } from '../../components/FormWrapper'
 import { FormItem } from '../../components/FormItem'
 import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
@@ -11,7 +16,7 @@ type MatchParams = {
 
 type Props = RouteComponentProps<MatchParams> & {}
 const Update = (props: Props) => {
-  const [incident, setIncident] = useState()
+  const [incident, setIncident] = useState<Incident>()
   const [description, setDescription] = useState('')
   const [type, setType] = useState<IncidentUpdate['type']>('update')
 
@@ -29,6 +34,11 @@ const Update = (props: Props) => {
   }, [props.match.params.id])
 
   if (!incident) return <div>Loading...</div>
+
+  if (incident.updates.some(update => update.type === 'resolved')) {
+    // If it's already resolved, we go back to the incident status page
+    return <Redirect to={`/${incident.id}`} />
+  }
 
   return (
     <FormWrapper>

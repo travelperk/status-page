@@ -6,7 +6,7 @@ import { getIncident } from '../../api/index'
 
 jest.mock('../../api/index')
 
-const incidentFabricator = () => {
+const incidentFabricator = (resolved = false) => {
   return {
     services: ['flights', 'cars'],
     title: 'Flights not working',
@@ -19,7 +19,7 @@ const incidentFabricator = () => {
           nanoseconds: 593000000,
           toDate: () => new Date(1560851458),
         },
-        type: 'investigating',
+        type: resolved ? 'resolved' : 'investigating',
       },
     ],
     id: 'twX4qgDbBZI0ZKtUgmN8',
@@ -44,5 +44,22 @@ describe('Incident', () => {
       '/twX4qgDbBZI0ZKtUgmN8/update'
     )
     expect(getByText('< Current status').getAttribute('href')).toBe('/')
+  })
+
+  it('should not allow to update a resolved incident', async () => {
+    const resolved = true
+    getIncident.mockImplementationOnce((id, setter) =>
+      setter(incidentFabricator(resolved))
+    )
+    const { getByText, queryByText } = render(
+      <MemoryRouter initialEntries={['/twX4qgDbBZI0ZKtUgmN8']}>
+        <Route path="/:id" component={Incident} />
+      </MemoryRouter>
+    )
+    await waitForElement(() => getByText('Shit happened'))
+
+    expect(getIncident).toHaveBeenCalledTimes(1)
+
+    expect(queryByText('+')).toBeNull()
   })
 })

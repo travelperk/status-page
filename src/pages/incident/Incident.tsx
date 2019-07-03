@@ -94,7 +94,11 @@ const Incident = (props: Props) => {
         {incident.updates.map(update => (
           <IncidentUpdate key={update.timestamp.seconds} update={update} />
         ))}
-        <PlusButton to={`/${props.match.params.id}/update`}>+</PlusButton>
+
+        {state !== 'stable' && (
+          <PlusButton to={`/${props.match.params.id}/update`}>+</PlusButton>
+        )}
+
         <CurrentStatus to={`/`}> &lt; Current status</CurrentStatus>
       </Card>
     </>
