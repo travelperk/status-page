@@ -33,6 +33,10 @@ const Create = (props: Props) => {
     props.history.replace('/')
   }
 
+  const cancelSubmit = () => {
+    props.history.replace('/')
+  }
+
   const toggleType = (service: ServicesType) => {
     if (services.includes(service)) {
       setServices(services.filter(s => s !== service))
@@ -98,6 +102,7 @@ const Create = (props: Props) => {
           ))}
         </div>
         <Button>Create incident</Button>
+        <Button onClick={cancelSubmit}>Cancel</Button>
       </form>
     </FormWrapper>
   )

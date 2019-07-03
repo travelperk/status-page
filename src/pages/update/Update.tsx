@@ -22,6 +22,11 @@ const Update = (props: Props) => {
 
     props.history.replace('/')
   }
+
+  const cancelSubmit = () => {
+    props.history.replace('/')
+  }
+
   useEffect(() => {
     const unsubscribe = getIncident(props.match.params.id, setIncident)
     return unsubscribe
@@ -59,6 +64,7 @@ const Update = (props: Props) => {
           </select>
         </FormItem>
         <Button>Update incident</Button>
+        <Button onClick={cancelSubmit}>Cancel</Button>
       </form>
     </FormWrapper>
   )
