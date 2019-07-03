@@ -33,17 +33,12 @@ const Update = (props: Props) => {
     return unsubscribe
   }, [props.match.params.id])
 
-  useEffect(() => {
-    if (
-      incident &&
-      incident.updates.some(update => update.type === 'resolved')
-    ) {
-      // If it's already resolved, we go back to the incident status page
-      props.history.replace(`/${incident.id}`)
-    }
-  }, [incident, props.history])
-
   if (!incident) return <div>Loading...</div>
+
+  if (incident.updates.some(update => update.type === 'resolved')) {
+    // If it's already resolved, we go back to the incident status page
+    props.history.replace(`/${incident.id}`)
+  }
 
   return (
     <FormWrapper>
