@@ -50,7 +50,7 @@ const IncidentEdit = (props: Props) => {
 
   return (
     <FormWrapper>
-      <h1>Update incident</h1>
+      <h1>Edit incident</h1>
       <form onSubmit={handleSubmit}>
         <FormItem>
           <label css="margin-bottom: 0.5em" htmlFor="title">
