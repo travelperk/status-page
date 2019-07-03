@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { RouteComponentProps, Link } from 'react-router-dom'
+import { RouteComponentProps } from 'react-router-dom'
 import { getIncident, addUpdateToIncident, IncidentUpdate } from '../../api'
 import { FormWrapper } from '../../components/FormWrapper'
 import { FormItem } from '../../components/FormItem'
-import Button from '../../components/Button'
-import { ButtonWrapper } from '../../components/ButtonWrapper'
+import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
 
 type MatchParams = {
   id: string
@@ -62,9 +61,7 @@ const Update = (props: Props) => {
         </FormItem>
         <ButtonWrapper>
           <Button>Create update</Button>
-          <Link to="/">
-            <Button>Cancel</Button>
-          </Link>
+          <LinkButton to="/">Cancel</LinkButton>
         </ButtonWrapper>
       </form>
     </FormWrapper>
