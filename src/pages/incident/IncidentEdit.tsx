@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   updateIncident,
   getIncident,
@@ -12,24 +12,21 @@ import { Button, LinkButton, ButtonWrapper } from '../../components/Buttons'
 import { FormItem } from '../../components/FormItem'
 import { FormWrapper } from '../../components/FormWrapper'
 
-
 type MatchParams = {
   id: string
 }
 
-type Props = RouteComponentProps<MatchParams> & {history: History}
+type Props = RouteComponentProps<MatchParams> & { history: History }
 
 const IncidentEdit = (props: Props) => {
-  const loadingTitle = 'Loading ...'
-  const [title, setTitle] = useState(loadingTitle)
+  const [title, setTitle] = useState()
   const [services, setServices] = useState<Array<ServicesType>>([])
   const [incident, setIncident] = useState<Incident>()
   useEffect(() => {
     getIncident(props.match.params.id, setIncident)
   }, [props.match.params.id])
 
-
-  if (incident && title === loadingTitle) {
+  if (incident && title == null) {
     setTitle(incident.title)
     setServices(incident.services)
   }
@@ -47,6 +44,8 @@ const IncidentEdit = (props: Props) => {
       setServices([...services, service])
     }
   }
+
+  if (!incident) return <div>Loading ...</div>
 
   return (
     <FormWrapper>
