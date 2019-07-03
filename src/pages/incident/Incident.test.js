@@ -1,4 +1,4 @@
-import { render, waitForElement, wait } from '@testing-library/react'
+import { render, waitForElement } from '@testing-library/react'
 import React from 'react'
 import { MemoryRouter, Route } from 'react-router-dom'
 import Incident from './Incident'

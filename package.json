@@ -22,7 +22,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "npm run build && npx firebase-tools deploy",
-    "deploy:ci": "npm run build && npx firebase-tools deploy --token \"$FIREBASE_TOKEN\""
+    "deploy:ci": "npm run build && npx firebase-tools deploy --token \"$FIREBASE_TOKEN\"",
+    "lint": "eslint --ext .js --ext .jsx --ext .ts --ext .tsx --ext .snap src/",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,7 +45,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run lint && npm run typecheck"
     }
   },
   "lint-staged": {
