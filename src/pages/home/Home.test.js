@@ -59,7 +59,7 @@ describe('Home', () => {
         </MemoryRouter>
       )
       expect(getByText('Loading ...')).toBeInTheDocument()
-      await waitForElement(() => getByText(`Service is: ${state}`))
+      await waitForElement(() => getByText(`Service is ${state}`))
 
       expect(getAllIncidents).toHaveBeenCalledTimes(1)
     }
@@ -75,7 +75,7 @@ describe('Home', () => {
       </MemoryRouter>
     )
     expect(getByText('Loading ...')).toBeInTheDocument()
-    await waitForElement(() => getByText(`Service is: stable`))
+    await waitForElement(() => getByText(`Service is stable`))
 
     expect(getAllIncidents).toHaveBeenCalledTimes(1)
   })
