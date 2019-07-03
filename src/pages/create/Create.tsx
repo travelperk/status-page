@@ -92,8 +92,8 @@ const Create = (props: Props) => {
         <div css="margin-bottom: 1em">
           <p>Services affected</p>
           {Services.map(service => (
-            <ServicesWrapper>
-              <label key={service}>
+            <ServicesWrapper key={service}>
+              <label>
                 <input
                   type="checkbox"
                   checked={services.includes(service)}
