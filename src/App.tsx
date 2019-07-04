@@ -51,8 +51,8 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Switch>
           <Route path="/create" component={Create} />
-          <Route path="/update/:id" component={Update} />
-          <Route path="/edit/:id" component={IncidentEdit} />
+          <Route path="/:id/update" component={Update} />
+          <Route path="/:id/edit" component={IncidentEdit} />
           <Route path="/:id" component={Incident} />
           <Route path="/" exact component={Home} />
           <Redirect to="/" />
