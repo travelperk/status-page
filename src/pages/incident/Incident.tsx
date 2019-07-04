@@ -4,6 +4,7 @@ import IncidentUpdate from './IncidentUpdate'
 import styled from 'styled-components'
 import { RouteComponentProps, Link } from 'react-router-dom'
 import { PlusButton } from '../../components/PlusButton'
+import { LinkButton } from '../../components/Buttons'
 
 const ServiceList = styled.ul`
   padding-left: 0;
@@ -23,13 +24,13 @@ const Card = styled.div`
   color: inherit;
   padding: 1em;
   margin: 2em auto;
-  width: 80vw;
+  width: 60vw;
 `
 
 type IncidentState = IncidentInterface['type'] | 'stable'
-const TitleWrapper = styled.div<{ state: IncidentState }>`
+const TimeTitleWrapper = styled.div<{ state: IncidentState }>`
   margin: 1em auto;
-  width: 80vw;
+  width: 60vw;
   background-color: ${props =>
     props.state === 'down'
       ? '#CC3232'
@@ -42,6 +43,12 @@ const TitleWrapper = styled.div<{ state: IncidentState }>`
   font-size: 2rem;
   box-sizing: border-box;
   transition: background-color 0.3s;
+`
+
+const TitleWrapper = styled.h1`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `
 
 const CurrentStatus = styled(Link)`
@@ -66,6 +73,7 @@ type Props = RouteComponentProps<MatchParams> & {}
 
 const Incident = (props: Props) => {
   const [incident, setIncident] = useState<IncidentInterface>()
+
   useEffect(() => {
     const unsubscribe = getIncident(props.match.params.id, setIncident)
     return unsubscribe
@@ -78,13 +86,17 @@ const Incident = (props: Props) => {
   const incidentTimestamp =
     incident.updates[incident.updates.length - 1].timestamp
   const state = getState(incident)
+
   return (
     <>
-      <TitleWrapper state={state}>
+      <TimeTitleWrapper state={state}>
         Incident on {incidentTimestamp.toDate().toUTCString()}
-      </TitleWrapper>
+      </TimeTitleWrapper>
       <Card>
-        <h1>{incident.title}</h1>
+        <TitleWrapper>
+          <span>{incident.title}</span>
+          <LinkButton to={`${incident.id}/edit`}>Edit</LinkButton>
+        </TitleWrapper>
         <ServiceList>
           {incident.services.map(service => (
             <li key={service}>{service}</li>

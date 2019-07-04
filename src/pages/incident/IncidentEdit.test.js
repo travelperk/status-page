@@ -51,7 +51,7 @@ describe('IncidentEdit', () => {
     expect(getIncident).toHaveBeenCalledTimes(1)
   })
 
-  it.only('should call updateIncident with an edited incident', async () => {
+  it('should call updateIncident with an edited incident', async () => {
     getIncident.mockImplementationOnce((id, setter) => {
       setTimeout(() => {
         act(() => {

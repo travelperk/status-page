@@ -21,7 +21,11 @@ const StatusWrapper = styled.div`
   margin: 2em 0;
 `
 
-const TimeWrapper = styled.span`
+const AuthorWrapper = styled.div`
+  color: rgba(0, 0, 0, 0.5);
+`
+
+const TimeWrapper = styled.div`
   font-style: italic;
   color: rgba(0, 0, 0, 0.5);
 `
@@ -32,7 +36,7 @@ const IncidentUpdate = (props: Props) => {
     <StatusWrapper>
       <StatusLabel state={update.type}>{update.type}</StatusLabel> -{' '}
       {update.description}
-      <br />
+      <AuthorWrapper>{update.author}</AuthorWrapper>
       <TimeWrapper>{update.timestamp.toDate().toUTCString()}</TimeWrapper>
     </StatusWrapper>
   )

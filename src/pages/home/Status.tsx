@@ -10,16 +10,15 @@ const StatusWrapper = styled.div<{ state: Incident['type'] | 'stable' }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: auto;
-  margin-bottom: 2em;
+  margin: auto auto 2em;
   width: 60vw;
   height: 40vh;
   background-color: ${props =>
-    props.state === 'down'
-      ? '#CC3232'
-      : props.state === 'degraded'
-      ? '#FFC82C'
-      : '#0FA863'};
+  props.state === 'down'
+    ? '#CC3232'
+    : props.state === 'degraded'
+    ? '#FFC82C'
+    : '#0FA863'};
   color: white;
   font-size: 2.5rem;
   transition: background-color 0.3s;
