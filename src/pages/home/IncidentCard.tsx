@@ -15,7 +15,6 @@ const Card = styled(Link)<{ state: IncidentInterface['type'] | 'stable' }>`
   padding: 1em 2em;
   box-sizing: border-box;
   margin: 2em auto;
-  width: 60vw;
   border-left: 6px solid
     ${props =>
       props.state === 'down'

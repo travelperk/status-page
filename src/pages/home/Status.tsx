@@ -7,13 +7,16 @@ type Props = {
   incidentList: Array<Incident>
 }
 
-const StatusWrapper = styled.div<{ state: Incident['type'] | 'stable' }>`
+// eslint-disable-next-line no-unexpected-multiline
+const StatusWrapper = styled.div<{
+  state: Incident['type'] | 'stable'
+}>`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: auto auto 2em;
-  width: 60vw;
-  height: 40vh;
+  margin-bottom: 2rem;
+  height: 20rem;
+  max-height: 40vh;
   background-color: ${props =>
     props.state === 'down'
       ? color.redDark
@@ -25,16 +28,11 @@ const StatusWrapper = styled.div<{ state: Incident['type'] | 'stable' }>`
   transition: background-color 0.3s;
   text-align: center;
   box-shadow: 0 0 4px 2px #0003;
-
-  @media (max-width: 768px) {
-    margin-bottom: 1em;
-    width: 100vw;
-  }
 `
 
-const currentState = (indicentList: Array<Incident>) => {
-  const activeIncidents = indicentList.filter(indicent =>
-    indicent.updates.every(update => update.type !== 'resolved')
+const currentState = (incidentList: Array<Incident>) => {
+  const activeIncidents = incidentList.filter(incident =>
+    incident.updates.every(update => update.type !== 'resolved')
   )
 
   const states = activeIncidents.map(incident => incident.type)
