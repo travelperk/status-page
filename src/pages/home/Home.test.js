@@ -2,7 +2,7 @@ import { render, waitForElement } from '@testing-library/react'
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import Home from './Home'
-import { getAllIncidents } from '../../api/index'
+import { getIncidents } from '../../api/index'
 
 jest.mock('../../api/index')
 
@@ -50,7 +50,7 @@ describe('Home', () => {
   it.each([['degraded'], ['down']])(
     'should show banner with status %s',
     async state => {
-      getAllIncidents.mockImplementationOnce(fn => {
+      getIncidents.mockImplementationOnce(fn => {
         setTimeout(() => fn([incidentFabricator(state)]), 0)
         return jest.fn()
       })
@@ -62,12 +62,12 @@ describe('Home', () => {
       expect(getByText('Loading ...')).toBeInTheDocument()
       await waitForElement(() => getByText(`Service is ${state}`))
 
-      expect(getAllIncidents).toHaveBeenCalledTimes(1)
+      expect(getIncidents).toHaveBeenCalledTimes(1)
     }
   )
 
   it('should show banner with status stable', async () => {
-    getAllIncidents.mockImplementationOnce(fn => {
+    getIncidents.mockImplementationOnce(fn => {
       setTimeout(() => fn([resolvedIncidentFabricator()]), 0)
       return jest.fn()
     })
@@ -79,6 +79,6 @@ describe('Home', () => {
     expect(getByText('Loading ...')).toBeInTheDocument()
     await waitForElement(() => getByText(`Service is stable`))
 
-    expect(getAllIncidents).toHaveBeenCalledTimes(1)
+    expect(getIncidents).toHaveBeenCalledTimes(1)
   })
 })
