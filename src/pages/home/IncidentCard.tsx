@@ -4,23 +4,8 @@ import styled from 'styled-components/macro'
 import { Incident as IncidentInterface } from '../../api'
 import IncidentUpdate from './IncidentUpdate'
 import { Button } from '../../components/Buttons'
+import ServiceList from '../../components/ServiceList';
 import { color } from '../../utils/variables'
-
-const ServiceList = styled.ul`
-  padding-left: 0;
-  list-style-type: none;
-  display: flex;
-  flex-wrap: wrap;
-  > * {
-    background-color: #147cba;
-    color: white;
-    padding: 0.2em 0.4em;
-    border-radius: 3px;
-    text-transform: uppercase;
-    margin-right: 1em;
-    margin-bottom: 0.8em;
-  }
-`
 
 const Card = styled(Link)<{ state: IncidentInterface['type'] | 'stable' }>`
   display: block;
@@ -85,11 +70,7 @@ const IncidentCard = (props: Props) => {
       <h2>{incident.title}</h2>
 
       <CollapseCard isOpened={expanded}>
-        <ServiceList>
-          {incident.services.map(service => (
-            <li key={service}>{service}</li>
-          ))}
-        </ServiceList>
+        <ServiceList services={incident.services} />
         {incident.updates.map(update => (
           <IncidentUpdate key={update.timestamp.seconds} update={update} />
         ))}
