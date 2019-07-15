@@ -61,22 +61,30 @@ export interface Incident {
   type: 'down' | 'degraded'
 }
 
-export const getAllIncidents = (
+const incidentsPerPage = 5
+let page = 1
+
+export const getIncidents = (
   setIncidents: (incidents: Array<Incident>) => any
-) =>
-  incidentsDb.orderBy('timestamp').onSnapshot(async (snapshot: any) => {
+): (() => void) => {
+  let query = incidentsDb
+    .orderBy('timestamp', 'desc')
+    .limit(incidentsPerPage * page)
+
+  page++
+
+  return query.onSnapshot(async (snapshot: any) => {
     if (snapshot.empty) return setIncidents([])
     const incidents = await Promise.all(snapshot.docs.map(async (doc: any) => {
       const data = doc.data()
       const updates = await Promise.all(
-        data.updates
-          .map(async (update: any) => await getDocData(update))
-          .reverse()
+        data.updates.map(async (update: any) => await getDocData(update))
       )
       return { ...data, updates, id: doc.id } as Incident
     }) as Array<Incident>)
-    setIncidents(incidents.reverse())
+    setIncidents(incidents)
   })
+}
 
 interface PartialUpdate {
   description: string
@@ -117,7 +125,11 @@ export const createIncident = async (user: User, incident: PartialIncident) => {
   })
 }
 
-export const updateIncident = async (id: Incident['id'], title: Incident['title'], services: Incident['services']) => {
+export const updateIncident = async (
+  id: Incident['id'],
+  title: Incident['title'],
+  services: Incident['services']
+) => {
   const updateObject = {
     title: title,
     services: services,
