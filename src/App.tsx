@@ -10,6 +10,7 @@ import Update from './pages/update/Update'
 import Incident from './pages/incident/Incident'
 import UserContext from './contexts/UserContext'
 import IncidentEdit from './pages/incident/IncidentEdit'
+import UpdateEdit from './pages/update/UpdateEdit'
 
 const LoginPage = styled.div`
   display: flex;
@@ -50,6 +51,7 @@ const App: React.FC = () => {
     <UserContext.Provider value={user}>
       <BrowserRouter>
         <Switch>
+          <Route path="/:incidentId/:updateId/edit" component={UpdateEdit} />
           <Route path="/create" component={Create} />
           <Route path="/:id/update" component={Update} />
           <Route path="/:id/edit" component={IncidentEdit} />

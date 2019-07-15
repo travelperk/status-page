@@ -2,9 +2,12 @@ import React from 'react'
 import { IncidentUpdate as IncidentUpdateInterface } from '../../api'
 import styled from 'styled-components/macro'
 import { color } from '../../utils/variables'
+import { Link } from 'react-router-dom'
+import EditIcon from '../../icons/EditIcon'
 
 type Props = {
   update: IncidentUpdateInterface
+  incidentId: string
 }
 
 const UpdateWrapper = styled.span<{ state: IncidentUpdateInterface['type'] }>`
@@ -34,13 +37,22 @@ const TimeWrapper = styled.div`
   color: rgba(0, 0, 0, 0.5);
 `
 
+const StyledEditIcon = styled(EditIcon)`
+  font-size: 1em;
+  color: steel;
+  margin-left: 10px;
+`
+
 const IncidentUpdate = (props: Props) => {
-  const { update } = props
+  const { incidentId, update } = props
   return (
     <Wrapper>
       <UpdateWrapper state={update.type}>{update.type}</UpdateWrapper>
       <div>
         {update.description}
+        <Link to={`${incidentId}/${update.id}/edit`}>
+          <StyledEditIcon />
+        </Link>
         <AuthorWrapper>{update.author}</AuthorWrapper>
         <TimeWrapper>{update.timestamp.toDate().toUTCString()}</TimeWrapper>
       </div>

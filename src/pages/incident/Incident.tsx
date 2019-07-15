@@ -109,7 +109,11 @@ const Incident = (props: Props) => {
         </ServiceList>
 
         {incident.updates.map(update => (
-          <IncidentUpdate key={update.timestamp.seconds} update={update} />
+          <IncidentUpdate
+            key={update.timestamp.seconds}
+            update={update}
+            incidentId={incident.id}
+          />
         ))}
 
         {state !== 'stable' && (

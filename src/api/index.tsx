@@ -47,6 +47,7 @@ interface FirebaseTimestamp {
 }
 
 export interface IncidentUpdate {
+  id: string
   description: string
   type: 'investigating' | 'update' | 'resolved'
   timestamp: FirebaseTimestamp
@@ -134,7 +135,19 @@ export const updateIncident = async (
     title: title,
     services: services,
   }
-  incidentsDb.doc(id).update(updateObject)
+  await incidentsDb.doc(id).update(updateObject)
+}
+
+export const updateIncidentUpdate = async (
+  user: User,
+  updateId: string,
+  description: string
+) => {
+  await updatesDb.doc(updateId).update({
+    description: description,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    author: user.email,
+  })
 }
 
 export const addUpdateToIncident = async (
@@ -173,7 +186,11 @@ export const getIncident = (id: string, setter: (incident: Incident) => void) =>
     const data = doc.data()
     const updates = await Promise.all(
       data.updates
-        .map(async (update: any) => await getDocData(update))
+        .map(async (update: any) => {
+          const updateDocument = await getDocData(update)
+          updateDocument.id = update.id
+          return updateDocument
+        })
         .reverse()
     )
     setter({ ...data, updates, id: doc.id } as Incident)
