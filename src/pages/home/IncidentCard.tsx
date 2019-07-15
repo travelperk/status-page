@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { Incident as IncidentInterface } from '../../api'
 import IncidentUpdate from './IncidentUpdate'
-import { LinkButton } from '../../components/Buttons'
+import { Button } from '../../components/Buttons'
 
 const ServiceList = styled.ul`
   padding-left: 0;
@@ -42,20 +42,14 @@ const Card = styled(Link)<{ state: IncidentInterface['type'] | 'stable' }>`
   }
 `
 
+const CardTitle = styled.h1`
+  display: flex;
+  justify-content: space-between;
+`
+
 const CollapseCard = styled.div<{ isOpened: boolean }>`
   overflow: ${props => (props.isOpened ? 'visible' : 'hidden')};
   height: ${props => (props.isOpened ? 'auto' : 0)};
-`
-
-const ExpandButton = styled.button`
-  border: none;
-  color: #000;
-  padding: 0.5em 1em;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: 0 0 4px 2px #0003;
 `
 
 const getState = (incident: IncidentInterface) => {
@@ -76,28 +70,25 @@ const IncidentCard = (props: Props) => {
   const [expanded, setExpanded] = useState(state !== 'stable')
   return (
     <Card state={state} to={`/${incident.id}`}>
-      <h1>{incidentTimestamp.toDate().toUTCString()}</h1>
+      <CardTitle>
+        <span>{incidentTimestamp.toDate().toUTCString()}</span>
+        <Button
+          onClick={evt => {
+            evt.preventDefault()
+            setExpanded(!expanded)
+          }}
+        >
+          {expanded ? '▲' : '▼'}
+        </Button>
+      </CardTitle>
       <h2>{incident.title}</h2>
-      <ExpandButton
-        onClick={evt => {
-          evt.preventDefault()
-          setExpanded(!expanded)
-        }}
-      >
-        {expanded ? '-' : '+'}
-      </ExpandButton>
+
       <CollapseCard isOpened={expanded}>
         <ServiceList>
           {incident.services.map(service => (
             <li key={service}>{service}</li>
           ))}
         </ServiceList>
-        <LinkButton
-          to={`/${incident.id}/update`}
-          css="display:inline-block;margin-top:1em;"
-        >
-          Add an update
-        </LinkButton>
         {incident.updates.map(update => (
           <IncidentUpdate key={update.timestamp.seconds} update={update} />
         ))}
