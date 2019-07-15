@@ -93,7 +93,7 @@ const IncidentCard = (props: Props) => {
           ))}
         </ServiceList>
         <LinkButton
-          to={`/update/${incident.id}`}
+          to={`/${incident.id}/update`}
           css="display:inline-block;margin-top:1em;"
         >
           Add an update
