@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/PlaneIcon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M4.90909091,11.2857143 L10.1298701,11.2857143 L8.72727273,4 L10.3636364,4 L13.8701299,11.2857143 L19.7918079,11.2857143 C20.459074,11.2857143 21,11.824693 21,12.5 C21,13.1706315 20.4477902,13.7142857 19.7918079,13.7142857 L13.8701299,13.7142857 L10.3636364,21 L8.72727273,21 L10.1298701,13.7142857 L4.90909091,13.7142857 L3.81818182,16.1428571 L3,16.1428571 L3,8.85714286 L3.81818182,8.85714286 L4.90909091,11.2857143 Z" id="path-1"></path>
+    </defs>
+    <g id="icons/PlaneIcon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="PlaneIcon" fill="#79879D" xlink:href="#path-1"></use>
+    </g>
+</svg>

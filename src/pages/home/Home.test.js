@@ -49,9 +49,9 @@ const resolvedIncidentFabricator = () => {
 describe('Home', () => {
   it.each([['degraded'], ['down']])(
     'should show banner with status %s',
-    async state => {
-      getIncidents.mockImplementationOnce(fn => {
-        setTimeout(() => fn([incidentFabricator(state)]), 0)
+    async status => {
+      getIncidents.mockImplementationOnce((amount, fn) => {
+        setTimeout(() => fn([incidentFabricator(status)]), 0)
         return jest.fn()
       })
       const { getByText } = render(
@@ -60,14 +60,14 @@ describe('Home', () => {
         </MemoryRouter>
       )
       expect(getByText('Loading ...')).toBeInTheDocument()
-      await waitForElement(() => getByText(`Service is ${state}`))
+      await waitForElement(() => getByText(`Service is ${status}`))
 
       expect(getIncidents).toHaveBeenCalledTimes(1)
     }
   )
 
   it('should show banner with status stable', async () => {
-    getIncidents.mockImplementationOnce(fn => {
+    getIncidents.mockImplementationOnce((amount, fn) => {
       setTimeout(() => fn([resolvedIncidentFabricator()]), 0)
       return jest.fn()
     })

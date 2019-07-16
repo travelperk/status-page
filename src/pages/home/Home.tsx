@@ -12,15 +12,18 @@ const Centered = styled.div`
   align-items: center;
 `
 
+const incidentsPerPage = 5
+
 const Home = () => {
   const [incidentList, setIncidentList] = useState<Array<IncidentInterface>>([])
   const [isFetching, setIsFetching] = useState(false)
   const [loadedAll, setLoadedAll] = useState(false)
 
   const unsubscribe = useRef<() => void>()
+  const page = useRef(0)
 
   const addIncidents = (incidents: Array<IncidentInterface>) => {
-    if (incidents.length === 0) {
+    if (incidents.length < page.current * incidentsPerPage) {
       setLoadedAll(true)
     }
     setIsFetching(false)
@@ -36,7 +39,7 @@ const Home = () => {
       window.innerHeight + document.documentElement.scrollTop >=
       document.documentElement.offsetHeight
     ) {
-      setIsFetching(!loadedAll)
+      setIsFetching(true)
     }
   }
 
@@ -46,7 +49,7 @@ const Home = () => {
   }, [])
 
   useEffect(() => {
-    if (!isFetching) {
+    if (!isFetching || loadedAll) {
       return
     }
 
@@ -54,8 +57,12 @@ const Home = () => {
       unsubscribe.current()
     }
 
-    unsubscribe.current = getIncidents(addIncidents)
-  }, [isFetching])
+    page.current++
+    unsubscribe.current = getIncidents(
+      page.current * incidentsPerPage,
+      addIncidents
+    )
+  }, [isFetching, loadedAll])
 
   return (
     <>
@@ -64,7 +71,7 @@ const Home = () => {
         return <IncidentCard key={incident.id} incident={incident} />
       })}
 
-      {isFetching && <Centered>Loading ...</Centered>}
+      {isFetching && !loadedAll && <Centered>Loading ...</Centered>}
 
       <PlusButton to="/create">+</PlusButton>
     </>

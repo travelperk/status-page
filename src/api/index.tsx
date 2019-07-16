@@ -62,17 +62,11 @@ export interface Incident {
   type: 'down' | 'degraded'
 }
 
-const incidentsPerPage = 5
-let page = 1
-
 export const getIncidents = (
+  amount: number,
   setIncidents: (incidents: Array<Incident>) => any
 ): (() => void) => {
-  let query = incidentsDb
-    .orderBy('timestamp', 'desc')
-    .limit(incidentsPerPage * page)
-
-  page++
+  let query = incidentsDb.orderBy('timestamp', 'desc').limit(amount)
 
   return query.onSnapshot(async (snapshot: any) => {
     if (snapshot.empty) return setIncidents([])
