@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { RouteComponentProps, Link } from 'react-router-dom'
 import { PlusButton } from '../../components/PlusButton'
 import EditIcon from '../../icons/EditIcon'
+import { color } from '../../utils/variables'
 
 const ServiceList = styled.ul`
   padding-left: 0;
@@ -33,10 +34,10 @@ const TimeTitleWrapper = styled.div<{ state: IncidentState }>`
   width: 60vw;
   background-color: ${props =>
     props.state === 'down'
-      ? '#CC3232'
+      ? color.redDark
       : props.state === 'degraded'
-      ? '#FFC82C'
-      : '#0FA863'};
+      ? color.yellow
+      : color.greenDark};
   color: white;
   text-align: center;
   padding: 1em 2em;
@@ -49,7 +50,7 @@ const TitleWrapper = styled.h1`
   display: block;
   /* justify-content: space-between; */
   * {
-    margin-right: 0.5em
+    margin-right: 0.5em;
   }
 `
 

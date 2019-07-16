@@ -4,6 +4,7 @@ import styled from 'styled-components/macro'
 import { Incident as IncidentInterface } from '../../api'
 import IncidentUpdate from './IncidentUpdate'
 import { Button } from '../../components/Buttons'
+import { color } from '../../utils/variables'
 
 const ServiceList = styled.ul`
   padding-left: 0;
@@ -33,10 +34,10 @@ const Card = styled(Link)<{ state: IncidentInterface['type'] | 'stable' }>`
   border-left: 6px solid
     ${props =>
       props.state === 'down'
-        ? '#CC3232'
+        ? color.redDark
         : props.state === 'degraded'
-        ? '#FFC82C'
-        : '#0FA863'};
+        ? color.yellow
+        : color.greenDark};
   @media (max-width: 768px) {
     width: 90vw;
   }
