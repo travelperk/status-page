@@ -40,7 +40,7 @@ describe('Incident', () => {
 
     expect(getIncident).toHaveBeenCalledTimes(1)
 
-    expect(getByText('+').getAttribute('href')).toBe(
+    expect(getByText('New update').getAttribute('href')).toBe(
       '/twX4qgDbBZI0ZKtUgmN8/update'
     )
     expect(getByTestId('back-button').getAttribute('href')).toBe('/')
