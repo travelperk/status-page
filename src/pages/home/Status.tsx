@@ -1,6 +1,7 @@
 import React from 'react'
-import { Incident } from '../../api'
 import styled from 'styled-components'
+import { Incident } from '../../api'
+import { color } from '../../utils/variables'
 
 type Props = {
   incidentList: Array<Incident>
@@ -14,11 +15,11 @@ const StatusWrapper = styled.div<{ state: Incident['type'] | 'stable' }>`
   width: 60vw;
   height: 40vh;
   background-color: ${props =>
-  props.state === 'down'
-    ? '#CC3232'
-    : props.state === 'degraded'
-    ? '#FFC82C'
-    : '#0FA863'};
+    props.state === 'down'
+      ? color.redDark
+      : props.state === 'degraded'
+      ? color.yellow
+      : color.greenDark};
   color: white;
   font-size: 2.5rem;
   transition: background-color 0.3s;

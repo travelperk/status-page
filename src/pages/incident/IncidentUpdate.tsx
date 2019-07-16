@@ -1,6 +1,7 @@
 import React from 'react'
 import { IncidentUpdate as IncidentUpdateInterface } from '../../api'
 import styled from 'styled-components/macro'
+import { color } from '../../utils/variables'
 
 type Props = {
   update: IncidentUpdateInterface
@@ -9,10 +10,10 @@ type Props = {
 const UpdateWrapper = styled.span<{ state: IncidentUpdateInterface['type'] }>`
   color: ${props =>
     props.state === 'resolved'
-      ? '#0FA863'
+      ? color.greenDark
       : props.state === 'update'
-      ? 'rgba(0,0,0,0.8)'
-      : '#FFC82C'};
+      ? color.blackAlpha80
+      : color.yellow};
   font-weight: bold;
   text-transform: capitalize;
   width: 10vw;

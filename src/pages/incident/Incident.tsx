@@ -4,7 +4,8 @@ import IncidentUpdate from './IncidentUpdate'
 import styled from 'styled-components'
 import { RouteComponentProps, Link } from 'react-router-dom'
 import { PlusButton } from '../../components/PlusButton'
-import { LinkButton } from '../../components/Buttons'
+import EditIcon from '../../icons/EditIcon'
+import { color } from '../../utils/variables'
 
 const ServiceList = styled.ul`
   padding-left: 0;
@@ -33,10 +34,10 @@ const TimeTitleWrapper = styled.div<{ state: IncidentState }>`
   width: 60vw;
   background-color: ${props =>
     props.state === 'down'
-      ? '#CC3232'
+      ? color.redDark
       : props.state === 'degraded'
-      ? '#FFC82C'
-      : '#0FA863'};
+      ? color.yellow
+      : color.greenDark};
   color: white;
   text-align: center;
   padding: 1em 2em;
@@ -46,9 +47,11 @@ const TimeTitleWrapper = styled.div<{ state: IncidentState }>`
 `
 
 const TitleWrapper = styled.h1`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: block;
+  /* justify-content: space-between; */
+  * {
+    margin-right: 0.5em;
+  }
 `
 
 const CurrentStatus = styled(Link)`
@@ -95,7 +98,9 @@ const Incident = (props: Props) => {
       <Card>
         <TitleWrapper>
           <span>{incident.title}</span>
-          <LinkButton to={`${incident.id}/edit`}>Edit</LinkButton>
+          <Link to={`${incident.id}/edit`}>
+            <EditIcon size="24px" color="steel" />
+          </Link>
         </TitleWrapper>
         <ServiceList>
           {incident.services.map(service => (
