@@ -4,9 +4,10 @@ import IncidentUpdate from './IncidentUpdate'
 import styled from 'styled-components'
 import { RouteComponentProps, Link } from 'react-router-dom'
 import { PlusButton } from '../../components/PlusButton'
-import ServiceList from '../../components/ServiceList';
+import ServiceList from '../../components/ServiceList'
 import EditIcon from '../../icons/EditIcon'
 import { color } from '../../utils/variables'
+import { LinkButton } from '../../components/Buttons'
 
 const Card = styled.div`
   color: inherit;
@@ -39,13 +40,6 @@ const TitleWrapper = styled.h1`
   * {
     margin-right: 0.5em;
   }
-`
-
-const CurrentStatus = styled(Link)`
-  font-size: 1.5em;
-  color: #147cba;
-  text-align: center;
-  text-decoration: none;
 `
 
 const getState = (indicent: IncidentInterface) => {
@@ -89,7 +83,7 @@ const Incident = (props: Props) => {
             <EditIcon size="24px" color="steel" />
           </Link>
         </TitleWrapper>
-        <ServiceList services={incident.services}/>
+        <ServiceList services={incident.services} />
         {incident.updates.map(update => (
           <IncidentUpdate
             key={update.timestamp.seconds}
@@ -102,7 +96,9 @@ const Incident = (props: Props) => {
           <PlusButton to={`/${props.match.params.id}/update`}>+</PlusButton>
         )}
 
-        <CurrentStatus to={`/`}> &lt; Current status</CurrentStatus>
+        <LinkButton data-testid="back-button" to="/">
+          Back
+        </LinkButton>
       </Card>
     </>
   )

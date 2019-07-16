@@ -31,7 +31,7 @@ describe('Incident', () => {
     getIncident.mockImplementationOnce((id, setter) =>
       setter(incidentFabricator())
     )
-    const { getByText } = render(
+    const { getByText, getByTestId } = render(
       <MemoryRouter initialEntries={['/twX4qgDbBZI0ZKtUgmN8']}>
         <Route path="/:id" component={Incident} />
       </MemoryRouter>
@@ -43,7 +43,7 @@ describe('Incident', () => {
     expect(getByText('+').getAttribute('href')).toBe(
       '/twX4qgDbBZI0ZKtUgmN8/update'
     )
-    expect(getByText('< Current status').getAttribute('href')).toBe('/')
+    expect(getByTestId('back-button').getAttribute('href')).toBe('/')
   })
 
   it('should not allow to update a resolved incident', async () => {
