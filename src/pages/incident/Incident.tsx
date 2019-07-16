@@ -4,22 +4,9 @@ import IncidentUpdate from './IncidentUpdate'
 import styled from 'styled-components'
 import { RouteComponentProps, Link } from 'react-router-dom'
 import { PlusButton } from '../../components/PlusButton'
+import ServiceList from '../../components/ServiceList';
 import EditIcon from '../../icons/EditIcon'
 import { color } from '../../utils/variables'
-
-const ServiceList = styled.ul`
-  padding-left: 0;
-  list-style-type: none;
-  display: flex;
-  > * {
-    background-color: #147cba;
-    color: white;
-    padding: 0.2em 0.4em;
-    border-radius: 3px;
-    text-transform: uppercase;
-    margin-right: 1em;
-  }
-`
 
 const Card = styled.div`
   color: inherit;
@@ -102,12 +89,7 @@ const Incident = (props: Props) => {
             <EditIcon size="24px" color="steel" />
           </Link>
         </TitleWrapper>
-        <ServiceList>
-          {incident.services.map(service => (
-            <li key={service}>{service}</li>
-          ))}
-        </ServiceList>
-
+        <ServiceList services={incident.services}/>
         {incident.updates.map(update => (
           <IncidentUpdate key={update.timestamp.seconds} update={update} />
         ))}
