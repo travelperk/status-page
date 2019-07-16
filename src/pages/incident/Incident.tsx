@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { RouteComponentProps, Link } from 'react-router-dom'
+import styled from 'styled-components'
 import { Incident as IncidentInterface, getIncident } from '../../api'
 import IncidentUpdate from './IncidentUpdate'
-import styled from 'styled-components'
-import { RouteComponentProps, Link } from 'react-router-dom'
-import { PlusButton } from '../../components/PlusButton'
 import ServiceList from '../../components/ServiceList'
 import EditIcon from '../../icons/EditIcon'
-import { color } from '../../utils/variables'
 import { LinkButton } from '../../components/Buttons'
+import { color } from '../../utils/variables'
 
 const Card = styled.div`
   color: inherit;
@@ -40,6 +39,10 @@ const TitleWrapper = styled.h1`
   * {
     margin-right: 0.5em;
   }
+`
+
+const IncidentWrapper = styled.div`
+  margin: 5rem 2rem;
 `
 
 const getState = (indicent: IncidentInterface) => {
@@ -84,18 +87,18 @@ const Incident = (props: Props) => {
           </Link>
         </TitleWrapper>
         <ServiceList services={incident.services} />
-        {incident.updates.map(update => (
-          <IncidentUpdate
-            key={update.timestamp.seconds}
-            update={update}
-            incidentId={incident.id}
-          />
-        ))}
-
-        {state !== 'stable' && (
-          <PlusButton to={`/${props.match.params.id}/update`}>+</PlusButton>
-        )}
-
+        <IncidentWrapper>
+          {state !== 'stable' && (
+            <LinkButton to={`/${props.match.params.id}/update`}>New update</LinkButton>
+          )}
+          {incident.updates.map(update => (
+            <IncidentUpdate
+              key={update.timestamp.seconds}
+              update={update}
+              incidentId={incident.id}
+            />
+          ))}
+        </IncidentWrapper>
         <LinkButton data-testid="back-button" to="/">
           Back
         </LinkButton>
