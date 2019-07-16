@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { color } from '../utils/variables'
 
+// eslint-disable-next-line no-unexpected-multiline
 export const Button = styled.button<{
   level?: 'default' | 'primary' | 'cancel'
 }>`
@@ -30,6 +31,7 @@ export const Button = styled.button<{
 `
 Button.defaultProps = { level: 'default' }
 
+// eslint-disable-next-line no-unexpected-multiline
 export const LinkButton = styled(Link)<{
   level?: 'default' | 'primary' | 'cancel'
 }>`
