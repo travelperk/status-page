@@ -27,7 +27,7 @@ const incidentFabricator = (type: Incident['type']): Incident => {
         type: 'investigating',
       },
     ],
-    id: 'twX4qgDbBZI0ZKtUgmN8',
+    id: Math.random().toString(),
   }
 }
 
@@ -48,7 +48,7 @@ const resolvedIncidentFabricator = (): Incident => {
         type: 'resolved',
       },
     ],
-    id: 'twX4qgDbBZI0ZKtUgmN8',
+    id: Math.random().toString(),
   }
 }
 
