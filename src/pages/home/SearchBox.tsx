@@ -61,6 +61,7 @@ const SearchBox = (props: Props) => {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         ref={inputRef}
+        role="search"
       />
     </Container>
   )

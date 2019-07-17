@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { getIncidents, Incident as IncidentInterface } from '../../api/index'
+import { getIncidents, Incident as IncidentInterface } from '../../api'
 import { PlusButton } from '../../components/PlusButton'
 import useIncidentFilter from '../../hooks/useIncidentFilter'
 import useInfiniteScroll from '../../hooks/useInfiniteScroll'
