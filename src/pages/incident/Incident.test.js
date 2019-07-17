@@ -62,4 +62,25 @@ describe('Incident', () => {
 
     expect(queryByText('+')).toBeNull()
   })
+
+  it('should not allow edit links in a resolved incident', async () => {
+    const resolved = true
+
+    getIncident.mockImplementationOnce((id, setter) =>
+      setter(incidentFabricator(resolved))
+    )
+
+    const { getByText, getByTestId } = render(
+      <MemoryRouter initialEntries={['/twX4qgDbBZI0ZKtUgmN8']}>
+        <Route path="/:id" component={Incident} />
+      </MemoryRouter>
+    )
+    await waitForElement(() => getByText('Shit happened'))
+
+    expect(getIncident).toHaveBeenCalledTimes(1)
+
+    expect(getByTestId('edit-incident').getElementsByTagName('a').length).toBe(
+      0
+    )
+  })
 })

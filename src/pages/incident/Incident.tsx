@@ -80,22 +80,27 @@ const Incident = (props: Props) => {
         Incident on {incidentTimestamp.toDate().toUTCString()}
       </TimeTitleWrapper>
       <Card>
-        <TitleWrapper>
+        <TitleWrapper data-testid="edit-incident">
           <span>{incident.title}</span>
-          <Link to={`${incident.id}/edit`}>
-            <EditIcon size="24px" color="steel" />
-          </Link>
+          {state !== 'stable' && (
+            <Link to={`${incident.id}/edit`}>
+              <EditIcon size="24px" color="steel" />
+            </Link>
+          )}
         </TitleWrapper>
         <ServiceList services={incident.services} />
         <IncidentWrapper>
           {state !== 'stable' && (
-            <LinkButton to={`/${props.match.params.id}/update`}>New update</LinkButton>
+            <LinkButton to={`/${props.match.params.id}/update`}>
+              New update
+            </LinkButton>
           )}
           {incident.updates.map(update => (
             <IncidentUpdate
               key={update.timestamp.seconds}
               update={update}
               incidentId={incident.id}
+              canEdit={state !== 'stable'}
             />
           ))}
         </IncidentWrapper>
