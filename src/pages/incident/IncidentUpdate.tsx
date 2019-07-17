@@ -8,6 +8,7 @@ import EditIcon from '../../icons/EditIcon'
 type Props = {
   update: IncidentUpdateInterface
   incidentId: string
+  canEdit: boolean
 }
 
 const UpdateWrapper = styled.span<{ state: IncidentUpdateInterface['type'] }>`
@@ -44,15 +45,17 @@ const StyledEditIcon = styled(EditIcon)`
 `
 
 const IncidentUpdate = (props: Props) => {
-  const { incidentId, update } = props
+  const { incidentId, update, canEdit } = props
   return (
     <Wrapper>
       <UpdateWrapper state={update.type}>{update.type}</UpdateWrapper>
-      <div>
+      <div data-testid="edit-update">
         {update.description}
-        <Link to={`${incidentId}/${update.id}/edit`}>
-          <StyledEditIcon />
-        </Link>
+        {canEdit && (
+          <Link to={`${incidentId}/${update.id}/edit`}>
+            <StyledEditIcon />
+          </Link>
+        )}
         <AuthorWrapper>{update.author}</AuthorWrapper>
         <TimeWrapper>{update.timestamp.toDate().toUTCString()}</TimeWrapper>
       </div>
