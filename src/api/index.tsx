@@ -64,7 +64,7 @@ export interface Incident {
 
 export const getIncidents = (
   amount: number,
-  setIncidents: (incidents: Array<Incident>) => any
+  setIncidents: (incidents: Array<Incident>) => any,
 ): (() => void) => {
   let query = incidentsDb.orderBy('timestamp', 'desc').limit(amount)
 

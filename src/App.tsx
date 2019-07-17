@@ -12,6 +12,18 @@ import UserContext from './contexts/UserContext'
 import IncidentEdit from './pages/incident/IncidentEdit'
 import UpdateEdit from './pages/update/UpdateEdit'
 
+const Container = styled.div`
+  width: 60vw;
+  min-width: 768px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1em;
+    width: 100vw;
+    min-width: unset;
+  }
+`
+
 const LoginPage = styled.div`
   display: flex;
   height: 100vh;
@@ -48,19 +60,21 @@ const App: React.FC = () => {
   }
 
   return (
-    <UserContext.Provider value={user}>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/:incidentId/:updateId/edit" component={UpdateEdit} />
-          <Route path="/create" component={Create} />
-          <Route path="/:id/update" component={Update} />
-          <Route path="/:id/edit" component={IncidentEdit} />
-          <Route path="/:id" component={Incident} />
-          <Route path="/" exact component={Home} />
-          <Redirect to="/" />
-        </Switch>
-      </BrowserRouter>
-    </UserContext.Provider>
+    <Container>
+      <UserContext.Provider value={user}>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/:incidentId/:updateId/edit" component={UpdateEdit} />
+            <Route path="/create" component={Create} />
+            <Route path="/:id/update" component={Update} />
+            <Route path="/:id/edit" component={IncidentEdit} />
+            <Route path="/:id" component={Incident} />
+            <Route path="/" exact component={Home} />
+            <Redirect to="/" />
+          </Switch>
+        </BrowserRouter>
+      </UserContext.Provider>
+    </Container>
   )
 }
 
