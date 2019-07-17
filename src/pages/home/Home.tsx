@@ -70,6 +70,7 @@ const Home = () => {
       page.current * incidentsPerPage,
       setIncidents
     )
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [isFetching, loadedAll])
 
   useEffect(() => {

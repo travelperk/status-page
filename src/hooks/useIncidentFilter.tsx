@@ -35,6 +35,7 @@ const useIncidentFilter = (
           incident.updates.some(update => regExp.test(update.description))
       )
     )
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [incidents, filter])
 
   return {
